@@ -1,0 +1,63 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: covit
+    volumes:
+      - ./volumes/postgre:/var/lib/postgresql/data
+      - ./volumes/common:/common
+    networks:
+      - app_network
+    ports:
+      - "5432:5432"
+
+  backend:
+    image: node:23-alpine
+    container_name: backend_app
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend:/usr/src/app
+      - ./volumes/common:/common
+    command: ["npm", "start"]
+    networks:
+      - app_network
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+  frontend:
+    image: httpd:2.4-alpine
+    container_name: frontend_app
+    volumes:
+      - ./frontend/build:/usr/local/apache2/htdocs/
+      - ./volumes/common:/common
+    networks:
+      - app_network
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana:main
+    container_name: grafana_server
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
+      - ./volumes/common:/common
+    networks:
+      - app_network
+    ports:
+      - "3000:3000"
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  postgre:
+  grafana:
+  common:
