@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+
+echo "=== Debugging environment variables ==="
+echo "POSTGRES_DB: $POSTGRES_DB"
+echo "POSTGRES_USER: $POSTGRES_USER"
+echo "POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
+echo "=================================="
+
+echo "Starting PostgreSQL server..."
+# On utilise l'entrypoint original de l'image postgres
+docker-entrypoint.sh postgres &
+
+echo "Waiting for PostgreSQL to be ready..."
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U postgres -c '\q'; do
+  echo "Still waiting for PostgreSQL (checking every 2 seconds)..."
+  sleep 5
+done
+
+echo "PostgreSQL is ready!"
+echo "Checking if initialization is needed..."
+
+# Si la base n'existe pas, on l'initialise avec notre fichier schema.sql
+PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB -c "SELECT 1" 2>/dev/null || {
+  echo "Database needs initialization..."
+  
+  # On exécute d'abord le schéma de la base
+  echo "Importing schema from schema.sql..."
+  PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB -f /init-scripts/schema.sql
+  
+  # Si on veut aussi des données de test
+  if [ -f "/init-scripts/seed.sql" ]; then
+    echo "Found seed.sql, importing test data..."
+    PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB -f /init-scripts/seed.sql
+    echo "Test data imported successfully!"
+  fi
+
+  echo "Database initialization complete!"
+}
+
+echo "All setup complete, keeping PostgreSQL running..."
+# On garde le processus PostgreSQL en premier plan
+wait %1
