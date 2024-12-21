@@ -1,63 +1,76 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: postgres_db
+    container_name: postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
       POSTGRES_DB: covit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     volumes:
-      - ./volumes/postgre:/var/lib/postgresql/data
-      - ./volumes/common:/common
-    networks:
-      - app_network
+      # - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts/postgres:/docker-entrypoint-initdb.d
+      - ./shared:/shared
     ports:
       - "5432:5432"
+    networks:
+      - app_network
+    # restart: unless-stopped
 
   backend:
     image: node:23-alpine
-    container_name: backend_app
-    working_dir: /usr/src/app
+    container_name: backend
+    working_dir: /app
     volumes:
-      - ./backend:/usr/src/app
-      - ./volumes/common:/common
-    command: ["npm", "start"]
-    networks:
-      - app_network
+      - ./backend:/app
+      - ./shared:/shared
+    command: sh -c "npm install && npm start"
     ports:
-      - "5000:5000"
+      - "3000:3000"
     depends_on:
       - postgres
-
-  frontend:
-    image: httpd:2.4-alpine
-    container_name: frontend_app
-    volumes:
-      - ./frontend/build:/usr/local/apache2/htdocs/
-      - ./volumes/common:/common
+    environment:
+      DATABASE_URL: postgres://user:password@postgres:5432/covit
+      NODE_ENV: development
     networks:
       - app_network
+    # restart: unless-stopped
+
+  frontend:
+    image: node:23-alpine
+    container_name: frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - ./shared:/shared
+    command: sh -c "npm install && npm start"
     ports:
-      - "80:80"
+      - "80:3000"
     depends_on:
       - backend
+    networks:
+      - app_network
+    # restart: unless-stopped
 
   grafana:
     image: grafana/grafana:main
-    container_name: grafana_server
+    container_name: grafana
     volumes:
-      - ./volumes/grafana:/var/lib/grafana
-      - ./volumes/common:/common
+      - grafana_data:/var/lib/grafana
+      - ./shared:/shared
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_HTTP_ADDR=0.0.0.0
+    ports:
+      - "3001:3000"
     networks:
       - app_network
-    ports:
-      - "3000:3000"
+    # restart: unless-stopped
+
+volumes:
+  # postgres_data:
+  grafana_data:
 
 networks:
   app_network:
     driver: bridge
-
-volumes:
-  postgre:
-  grafana:
-  common:
