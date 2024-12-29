@@ -9,15 +9,14 @@ function Header() {
         <>
             <header className={pathname === "/" ? "hidden" : "navigation_header"}>
 
-                <div className="header_width">
-                    <Link to="/">
-                        <div className="divlogo">
-                            <img src="LogoCovIT.png" alt="Logo CovIT" />
-                            <h1>CovIT</h1>
-                        </div>
+                <figure className="header_figure">
+                    <Link to="/stats">
+                        <img src="LogoCovIT.png" alt="Logo CovIT" />
+                        <figcaption className="figcaption-c">C</figcaption>
+                        <figcaption className="figcaption-vit">VIT</figcaption>
                     </Link>
-                </div>
-                <nav>s
+                </figure>
+                <nav>
                     <NavLink to="/stats">Stats</NavLink>
                     <NavLink to="/ajouter_des_donnees">Add data</NavLink>
                 </nav>

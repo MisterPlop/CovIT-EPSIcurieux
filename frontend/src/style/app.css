@@ -12,7 +12,7 @@ html {
 
 body {
     font-size: 16px;
-    font-family: sans-serif;
+    font-family: "Open Sans";
 }
 
 a {
@@ -28,7 +28,7 @@ button:hover {
     display: none;
 }
 
-
+/* HOME */
 
 .home_main {
     position: relative;
@@ -45,15 +45,64 @@ button:hover {
 .home_figure img {
     width: 100%;
 }
-.home_figure figcaption {
+.home_figure .figcaption-c, .home_figure .figcaption-vit {
     position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 270px;
-    padding: 10px 20px;
-    font-size: 25px;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    font-size: 100px;
+    font-weight: 600;
     text-transform: uppercase;
     text-align: center;
     color: rgb(10, 10, 10);
+}
+.home_figure .figcaption-vit {
+    left: 85%;
+}
+
+.home_main p {
+    position: absolute;
+    left: 50%;
+    bottom: 27%;
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
+/* HEADER */
+
+.navigation_header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+.header_figure {
+    position: relative;
+    width: 75px;
+}
+.header_figure img {
+    width: 100%;
+}
+.header_figure .figcaption-c, .header_figure .figcaption-vit {
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    transform: translate(0, -50%);
+    font-size: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgb(10, 10, 10);
+}
+.header_figure .figcaption-vit {
+    left: 85%;
+}
+nav {
+    width: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    font-size: 25px;
 }

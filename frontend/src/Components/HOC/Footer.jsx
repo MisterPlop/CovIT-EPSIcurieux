@@ -8,7 +8,7 @@ function Footer() {
         <>
             <footer className={pathname === "/" ? "hidden" : "navigation_footer"}>
                     <Link to="/cgu">Mentions Légales</Link>
-                <p className="copyright">@2025, CovIT</p>
+                <h1 className="copyright">@2025, CovIT</h1>
             </footer>
 
         </>

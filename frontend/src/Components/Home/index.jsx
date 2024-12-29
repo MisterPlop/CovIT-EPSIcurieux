@@ -8,9 +8,13 @@ function Home() {
           <figure className="home_figure">
             <Link to="/stats">
               <img src="LogoCovIT.png" alt="Logo CovIT" />
-              <figcaption>Accéder au site</figcaption>
+              <figcaption className="figcaption-c">C</figcaption>
+              <figcaption className="figcaption-vit">VIT</figcaption>
             </Link>
           </figure>
+          <Link to="/stats">
+            <p>Accéder au site</p>
+          </Link>
 
       </main>
     </>
