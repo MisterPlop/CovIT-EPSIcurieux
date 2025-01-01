@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function Header() {
 
@@ -8,14 +8,7 @@ function Header() {
     return (
         <>
             <header className={pathname === "/" ? "hidden" : "navigation_header"}>
-
-                <figure className="header_figure">
-                    <Link to="/stats">
-                        <img src="LogoCovIT.png" alt="Logo CovIT" />
-                        <figcaption className="figcaption-c">C</figcaption>
-                        <figcaption className="figcaption-vit">VIT</figcaption>
-                    </Link>
-                </figure>
+                <NavLink to="/"><img src="CovITlogo.png" alt="Logo CovIT" /></NavLink>
                 <nav>
                     <NavLink to="/stats">Stats</NavLink>
                     <NavLink to="/ajouter_des_donnees">Add data</NavLink>

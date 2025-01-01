@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Cocogoose';
+    src: url('../Assets/fonts/Cocogoose-Pro-Regular-trial.ttf');
+}
+
+
 /* GENERALES */
 
 * {
@@ -13,6 +19,7 @@ html {
 body {
     font-size: 16px;
     font-family: "Open Sans";
+    color: rgb(10, 10, 10);
 }
 
 a {
@@ -45,27 +52,12 @@ button:hover {
 .home_figure img {
     width: 100%;
 }
-.home_figure .figcaption-c, .home_figure .figcaption-vit {
+.home_figure figcaption {
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(0, -50%);
-    font-size: 100px;
-    font-weight: 600;
+    right: 0;
+    bottom: -20px;
     text-transform: uppercase;
-    text-align: center;
-    color: rgb(10, 10, 10);
-}
-.home_figure .figcaption-vit {
-    left: 85%;
-}
-
-.home_main p {
-    position: absolute;
-    left: 50%;
-    bottom: 27%;
-    text-transform: uppercase;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 /* HEADER */
@@ -76,33 +68,45 @@ button:hover {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    font-family: "Cocogoose";
 }
-.header_figure {
-    position: relative;
+.navigation_header img {
     width: 75px;
-}
-.header_figure img {
-    width: 100%;
-}
-.header_figure .figcaption-c, .header_figure .figcaption-vit {
-    position: absolute;
-    top: 50%;
-    left: -5px;
-    transform: translate(0, -50%);
-    font-size: 40px;
-    font-weight: 600;
-    text-transform: uppercase;
-    text-align: center;
-    color: rgb(10, 10, 10);
-}
-.header_figure .figcaption-vit {
-    left: 85%;
+    margin: 0 auto 15px auto;
 }
 nav {
-    width: 10%;
+    width: 360px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     align-items: center;
-    padding: 10px;
-    font-size: 25px;
+    font-size: 18px;
+}
+nav a {
+    margin-bottom: 15px;
+}
+
+/* FOOTER */
+
+.navigation_footer {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.navigation_footer > * {
+    margin: 0 25px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* PAGES */
+
+.notFound-container {
+    width: 100vw;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

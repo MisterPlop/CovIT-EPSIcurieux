@@ -3,8 +3,10 @@
 function NotFound() {
     return (
       <>
-        <h3>Erreur 404</h3>
-        <h3>PAGE INEXISTANTE</h3>
+      <div className="notFound-container">
+        <h3>Oups! PAGE INEXISTANTE</h3>
+        <p>Vérifiez l'url ou rechargez la page</p>
+      </div>
       </>
     )
   }
