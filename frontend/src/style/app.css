@@ -1,8 +1,12 @@
+:root {
+    --primaryPink: rgb(254, 0, 112);
+    --white: rgb(250, 250, 250);
+}
+
 @font-face {
     font-family: 'Cocogoose';
     src: url('../Assets/fonts/Cocogoose-Pro-Regular-trial.ttf');
 }
-
 
 /* GENERALES */
 
@@ -82,7 +86,14 @@ nav {
     font-size: 18px;
 }
 nav a {
+    width: 100%;
+    text-align: center;
     margin-bottom: 15px;
+    padding: 5px 0;
+}
+.active {
+    color: var(--white);
+    background-color: var(--primaryPink);
 }
 
 /* FOOTER */
@@ -109,4 +120,15 @@ nav a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+
+/* STATS */
+
+.section-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }

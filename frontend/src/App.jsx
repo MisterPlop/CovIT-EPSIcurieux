@@ -2,9 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 /* Pages tout publique */
 import HOC from "./Components/HOC";
-import Home from "./Components/Home";
+import Home from "./Components/Pages/Home";
+import Stats from "./Components/Pages/Stats";
 
-import NotFound from "./Components/NotFound";
+import NotFound from "./Components/Pages/NotFound";
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
 
         <Route path="/" element={<HOC child={Home} />} />
         <Route path="/*" element={<HOC child={NotFound} />} />
+        
+        <Route path="/stats" element={<HOC child={Stats} />} />
 
       </Routes>
     </BrowserRouter>
