@@ -1,12 +1,17 @@
+:root {
+    --primary: #166534;
+}
+
 .loader {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin: 50px 0;
 
 	.bar {
 		width: 10px;
 		height: 5px;
-		background: rgb(254, 0, 112);
+		background: var(--primary);
 		margin: 2px;
 		animation: bar 1s infinite linear;
 
