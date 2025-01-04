@@ -168,3 +168,35 @@ nav a {
     justify-content: center;
 
 }
+
+/* IMPRINTS */
+
+.section-imprints {
+	width: 90%;
+	margin: auto;
+	padding: 20px;
+	background-color: #f9f9f9;
+	color: #333;
+}
+
+.section-imprints article {
+	margin-bottom: 50px;
+}
+
+.section-imprints p {
+	margin-left: 15px;
+	line-height: 1.8;
+}
+
+.section-imprints ul {
+	padding: 0;
+	margin: 15px 0 0 45px;
+}
+
+.section-imprints ul li {
+	margin-bottom: 5px;
+}
+
+.section-imprints a:hover {
+	text-decoration: underline;
+}
