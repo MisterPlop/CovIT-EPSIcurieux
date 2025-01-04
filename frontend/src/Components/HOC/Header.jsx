@@ -1,21 +1,34 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartPie, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
+  const { pathname } = useLocation();
 
-
-    const { pathname } = useLocation(); // sert à changer la classname du header en fonction de l'url (page d'accueil ou reste du site)
-
-    return (
-        <>
-            <header className={pathname === "/" ? "hidden" : "navigation_header"}>
-                <NavLink to="/"><img src="CovITlogo.png" alt="Logo CovIT" /></NavLink>
-                <nav>
-                    <NavLink to="/stats">Stats</NavLink>
-                    <NavLink to="/ajouter_des_donnees">Add data</NavLink>
-                </nav>
-            </header>
-        </>
-    );
+  return (
+    <>
+      <header className={pathname === "/" ? "hidden" : "navigation_header"}>
+        <nav>
+          <NavLink to="/stats">            
+            <div className="nav-icon">
+              <FontAwesomeIcon icon={faChartPie} />
+            </div>
+            <p className="nav-text">Stats</p>
+          </NavLink>
+          <Link to="/">
+            <img src="CovITLogo.png" alt="Logo CovIT" />
+          </Link>
+          <NavLink to="/ajouter_des_donnees">
+            <div className="nav-icon">
+              <FontAwesomeIcon icon={faCirclePlus} />
+            </div>
+            <p className="nav-text">Add data</p>
+          </NavLink>
+        </nav>
+      </header>
+    </>
+  );
 }
 
 export default Header;
