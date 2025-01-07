@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 export default function Imprints() {
   return (
     <>
-      <section className="section-imprints">
-        <h2>Mentions Légales</h2>
-
+      <div className="section-imprints">
         <article>
-          <h3>Nom du Projet :</h3>
-          <p>Détection et Prévention des Pandémies - Plateforme d'Analyse</p>
+          <h3>CovIT</h3>
+          <p>Plateforme d'Analyse de donnée sur la pandémie du covid-19</p>
         </article>
         <article>
           <h3>Équipe de Développement :</h3>
@@ -23,10 +21,6 @@ export default function Imprints() {
             <li>Mohamad DAWOOD</li>
             <li>Dylan Vivant</li>
           </ul>
-        </article>
-        <article>
-          <h3>Établissement :</h3>
-          <p>EPSI Lyon</p>
         </article>
         <article>
           <h3>Objet du Projet :</h3>
@@ -102,7 +96,7 @@ export default function Imprints() {
             l'équipe pédagogique de l'EPSI Lyon.
           </p>
         </article>
-      </section>
+      </div>
     </>
   );
 }

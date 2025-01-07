@@ -5,7 +5,7 @@ function Home() {
     <>
       <main className="home_main">
           <figure className="home_figure">
-            <Link to="/stats">
+            <Link to="/statistiques">
               <img src="CovITlogo.png" alt="Logo CovIT" />
               <figcaption>Accéder au site</figcaption>
             </Link>

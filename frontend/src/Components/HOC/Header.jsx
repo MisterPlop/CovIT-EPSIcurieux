@@ -10,7 +10,7 @@ function Header() {
     <>
       <header className={pathname === "/" ? "hidden" : "navigation_header"}>
         <nav>
-          <NavLink to="/stats">            
+          <NavLink to="/statistiques">            
             <div className="nav-icon">
               <FontAwesomeIcon icon={faChartPie} />
             </div>

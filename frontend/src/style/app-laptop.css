@@ -1,0 +1,33 @@
+@media screen and (min-width: 781px) {
+
+    .mobilAndTablet-hidden {
+        display: flex;
+    }
+    .laptopAndDesktop-hidden {
+        display: none;
+    }
+    .navigation_header {
+        position: static;
+        padding: 10px 0;
+        margin-bottom: 50px;
+        transform: translateX(0);
+    }
+    .navigation_header img {
+        height: 50px;
+    }
+    nav a {
+        padding: 0 10px;
+        border-radius: 10px;
+    }
+    .nav-icon {
+        display: none;
+    }
+    .nav-text {
+        display: block;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 15px;
+    }
+
+
+}

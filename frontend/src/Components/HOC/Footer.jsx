@@ -6,7 +6,7 @@ function Footer() {
     
     return (
         <>
-            <footer className={pathname === "/" ? "hidden" : "navigation_footer"}>
+            <footer className={pathname === "/" ? "" : "mobilAndTablet-hidden"}>
                 <Link to="/mentions_legales">Mentions Légales</Link>
                 <h1 className="copyright">@2025, CovIT</h1>
             </footer>

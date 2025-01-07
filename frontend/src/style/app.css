@@ -1,9 +1,15 @@
 :root {
     --primary: #166534;
+    --primaryB: #10b981;
+    --gold: rgb(245, 205, 115);
+    --gold2: rgb(184, 149, 69);
+    --gold3: rgb(122, 99, 43);
     --white: #f1f5f9;
     --whiter: #f8fafc;
-    --textB: #10b981;
-    --text: #0f172a;
+    --primaryGradientBkg : linear-gradient(50deg, var(--primary), rgba(255, 255, 255, 0) 90.71%),
+    linear-gradient(200deg, var(--primary), rgba(255, 255, 255, 0) 30.71%),
+    linear-gradient(127deg, var(--primary), rgba(255, 255, 255, 0) 70.71%),
+    linear-gradient(336deg, var(--primary), rgba(255, 255, 255, 0) 95.71%);
 
     --backgroundDark: #1e293b;
     --backgroundDarkLess: #334155;
@@ -44,17 +50,19 @@ h2, h3, h4 {
     font-family: "Manrope Variable";
     font-weight: 800;
 	color: var(--primary);
-    padding-bottom: 20px;
 }
 h2 {
 	font-size: 30px;
 	text-align: center;
+    padding-bottom: 20px;
 }
 h3 {
-	font-size: 25px;
+	font-size: 20px;
+	text-align: center;
+    padding-bottom: 20px;
 }
 h4 {
-    font-size: 20px;
+    font-size: 16px;
 }
 a {
     text-decoration: none;
@@ -65,7 +73,7 @@ button:hover {
     cursor: pointer;
 }
 
-.hidden {
+.hidden, .mobilAndTablet-hidden {
     display: none;
 }
 
@@ -74,7 +82,7 @@ button:hover {
 .home_main {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
 }
 .home_figure {
     position: absolute;
@@ -103,7 +111,7 @@ button:hover {
     left: 50%;
     padding-bottom: 5px;
     transform: translateX(-50%);
-    border-top: 1px solid var(--backgroundLight);
+    border-top: 1px solid var(--primary);
     background: var(--whiter);
 }
 .navigation_header img {
@@ -116,12 +124,12 @@ nav {
     font-size: 18px;
 }
 nav a {
-    color: var(--textB);
+    color: var(--primaryB);
     border-radius: 0 0 10px 10px;
 }
 .active {
-    color: var(--primary);
-    background: var(--backgroundLight);
+    color: var(--white);
+    background: var(--primary);
 }
 .nav-icon {
     height: 50px;
@@ -134,15 +142,15 @@ nav a {
 
 /* FOOTER */
 
-.navigation_footer {
+footer {
     width: 100%;
     height: 10vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 100px;
+    color: var(--primary);
 }
-.navigation_footer > * {
+footer > * {
     margin: 0 25px;
     font-size: 16px;
     font-weight: normal;
@@ -152,22 +160,119 @@ nav a {
 
 .notFound-container, .navigation_main {
     width: 100vw;
-    min-height: 80vh;
+    /* min-height: 80vh; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
+/* TITLE */
 
-/* STATS */
+.section-title {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--primary);
+}
 
-.section-stats {
+/* STATISTICS */
+
+.section-body {
+    width: 90%;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section-end {
+    height: 10vh;
+}
+.chart-article {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 25px;
+}
+.chart-card {
+    width: 100%;
+    margin: 10px 0;
+    padding: 20px;
+    background: var(--primaryGradientBkg);
+    border-radius: 10px;
+    box-shadow: 0 1px 5px 0 var(--backgroundDarkLess);
+}
 
+/* AJOUTER DES DONNEES */
+
+.add-datas-form {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--primaryGradientBkg);
+    border-radius: 10px;
+    box-shadow: 0 1px 5px 0 var(--backgroundDarkLess);
+}
+.add-datas-form label {
+    color: var(--white);
+    font-weight: 800;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.add-datas-form input {
+    width: 100%;
+    height: 30px;
+    font-size: 18px;
+    margin-bottom: 25px;
+    padding: 0 5px;
+    background: transparent;
+    border: none;
+    background: var(--whiter);
+}
+.add-datas-form input:focus {
+    height: 40px;
+    outline: none;
+    background: var(--white);
+}
+.add-datas-form button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin: 15px 0;
+    border-radius: 50%;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    background: var(--gold);
+    background-image: linear-gradient(145deg, var(--gold2), var(--gold));
+    box-shadow: inset 1px 1px 0 var(--white), inset -1px -1px 0px var(--gold3);
+}
+.add-datas-form button::before {
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: inherit;
+    background-color: transparent;
+    background-image: linear-gradient(145deg, var(--gold2), var(--gold));
+  
+    z-index: -1;
+    border: 1px solid var(--primary);
+    box-shadow: 15px 15px 20px #005225, -15px -15px 20px #3e8d42,
+    inset 1px 1px 0 var(--white), inset -1px -1px 0px var(--gold3);
+}
+.add-datas-form button:hover {
+    transform: scale(1.02);
 }
 
 /* IMPRINTS */
@@ -175,15 +280,18 @@ nav a {
 .section-imprints {
 	width: 90%;
 	margin: auto;
-	padding: 20px;
-	background-color: #f9f9f9;
-	color: #333;
+	color: var(--text);
 }
 
 .section-imprints article {
-	margin-bottom: 50px;
+	margin-bottom: 5px;
+	padding: 20px;
+	background-color: var(--backgroundLight);
 }
 
+.section-imprints h3 {
+	margin-left: 15px;
+}
 .section-imprints p {
 	margin-left: 15px;
 	line-height: 1.8;
