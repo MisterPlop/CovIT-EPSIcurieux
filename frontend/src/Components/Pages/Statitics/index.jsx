@@ -31,7 +31,7 @@ export default function Stats() {
     labels: fakeDatasDaily.map((item) => item.date),
     datasets: [
       {
-        label: "Nombre de malades par semaine",
+        label: "Nombre de nouveaux malades  semaines",
         data: fakeDatasDaily.map((item) => item.value),
         fill: false,
         borderColor: "rgb(245, 205, 115)",
@@ -59,19 +59,50 @@ export default function Stats() {
         display: false,
         position: "top",
         labels: {
-          color: "rgb(250, 250, 250)", // Color for the legend text
+          color: "rgb(250, 250, 250)",
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: "rgb(250, 250, 250)", // Color for the x-axis text
+          color: "rgb(250, 250, 250)",
+          display: false,
         },
       },
       y: {
         ticks: {
-          color: "rgb(250, 250, 250)", // Color for the y-axis text
+          color: "rgb(250, 250, 250)",
+        },
+      },
+    },
+  };
+  const optionsDaily = {
+    ...options,
+    plugins: {
+      ...options.plugins,
+      title: {
+        display: true,
+        text: 'Hebdomadaire', // Titre spécifique pour le graphique hebdomadaire
+        color: 'rgb(250, 250, 250)',
+        font: {
+          size: 20,
+          weight: 'bold',
+        },
+      },
+    },
+  };
+  const optionsCumulative = {
+    ...options,
+    plugins: {
+      ...options.plugins,
+      title: {
+        display: true,
+        text: 'Total', // Titre spécifique pour le graphique cumulatif
+        color: 'rgb(250, 250, 250)',
+        font: {
+          size: 20,
+          weight: 'bold',
         },
       },
     },
@@ -98,34 +129,29 @@ export default function Stats() {
   return (
     <>
       <section className="section-body">
-        <h2>Nombre de malades</h2>
-        <article  className="chart-article">
-          <h3>Chaque jour</h3>
-          <div className="chart-card">
-            {!chartDataDaily ? (
-              <Loader />
-            ) : (
-              <>
-                <Line data={chartDataDaily} options={options} />
-              </>
-            )}
-          </div>
-        </article>
-        
-        <article  className="chart-article">
-          <h3>Total</h3>
-          <div className="chart-card">
-            {!chartDataCumulative ? (
-              <Loader />
-            ) : (
-              <>
-                <Line data={chartDataCumulative} options={options} />
-              </>
-            )}
-          </div>
-        </article>
+        <h2>Nombre de nouveaux malades</h2>
+        <div className="chart-container">
+            <div className="chart-card">
+              {!chartDataDaily ? (
+                <Loader />
+              ) : (
+                <>
+                  <Line data={chartDataDaily} options={optionsDaily} />
+                </>
+              )}
+            </div>
+            <div className="chart-card">
+              {!chartDataCumulative ? (
+                <Loader />
+              ) : (
+                <>
+                  <Line data={chartDataCumulative} options={optionsCumulative} />
+                </>
+              )}
+            </div>
+        </div>
       </section>
-      <section className="section-end"></section>
+      <section className="section-end laptopAndDesktop-hidden"></section>
     </>
   );
 }

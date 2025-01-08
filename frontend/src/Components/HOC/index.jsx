@@ -1,30 +1,28 @@
 import { useLocation } from "react-router-dom";
 
-import Header from './Header'
-import Footer from './Footer'
+import Header from "./Header";
+import Footer from "./Footer";
 import Title from "../Title";
 
 function HOC({ child, title }) {
+  const Child = child;
 
-    const Child = child;
+  const { pathname } = useLocation();
 
-    const { pathname } = useLocation();
+  return (
+    <div id={pathname === "/" ? "home_body" : "navigation_body"}>
+      <div className="navigation_container">
+        <Header />
 
-    return (
-        <div id={pathname === "/" ? "home_body" : ""}>
+        <main className="navigation_main">
+          <Title title={title} />
+          <Child />
+        </main>
+      </div>
 
-            <Header />
-
-            <main className="navigation_main">
-                <Title title={title} />
-                <Child />
-            </main>
-
-            <Footer />
-
-
-        </div>
-    );
+      <Footer />
+    </div>
+  );
 }
 
 export default HOC;
