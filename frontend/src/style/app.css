@@ -111,11 +111,13 @@ button:hover {
     left: 50%;
     padding-bottom: 5px;
     transform: translateX(-50%);
-    border-top: 1px solid var(--primary);
-    background: var(--whiter);
+    background: var(--primary);
 }
 .navigation_header img {
     height: 30px;
+}
+.img-hiddenmo {
+    display: none;
 }
 nav {
     display: flex;
@@ -124,19 +126,25 @@ nav {
     font-size: 18px;
 }
 nav a {
-    color: var(--primaryB);
-    border-radius: 0 0 10px 10px;
+    color: var(--white);
+    border-top: 5px solid var(--primary);
 }
 .active {
-    color: var(--white);
-    background: var(--primary);
+    border-top: 5px solid var(--white);
+}
+.nav-tab {
+    height: 50px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
 }
 .nav-icon {
-    height: 50px;
-    line-height: 50px;
-    padding: 0 15px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.nav-text {
+.nav-text, .icon-toggle_menu {
     display: none;
 }
 
