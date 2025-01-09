@@ -1,4 +1,4 @@
-import React /*, { useEffect,  useState } */ from "react";
+import React, { /* useEffect, */ useState }  from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -109,20 +109,40 @@ export default function Stats() {
     getStats();
   }, []); */
 
+
+  const [selectedCard, setSelectedCard] = useState(0);
+  const cards = [
+    {
+      title: "Hebdomadaire",
+      label: "Nombre de nouveaux malades par semaines",
+      dataset: fakeDatasDaily,
+    },
+    {
+      title: "Total",
+      label: "Nombre de malades total",
+      dataset: fakeDatasCumulative,
+    }
+  ]
   return (
     <>
       <section className="section-body">
         <h2>Nombre de nouveaux malades</h2>
+        <div className="chart-btn-div">
+          {cards.map((card, index) => (
+            <button
+              key={index}
+              className={`chart-btn ${selectedCard === index ? "selected-btn" : ""}`}
+              onClick={() => setSelectedCard(index)}
+            >
+              {card.title}
+            </button>
+          ))}
+        </div>
         <div className="chart-container">
           <Chart
-            title="Hebdomadaire"
-            label="Nombre de nouveaux malades par semaines"
-            dataset={fakeDatasDaily}
-          />
-          <Chart
-            title="Total"
-            label="Nombre de malades total"
-            dataset={fakeDatasCumulative}
+            title={cards[selectedCard].title}
+            label={cards[selectedCard].label}
+            dataset={cards[selectedCard].dataset}
           />
         </div>
       </section>
