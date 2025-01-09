@@ -1,4 +1,4 @@
-import React, { /* useEffect, */ useState }  from "react";
+import React, { /* useEffect, */ useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -27,6 +27,24 @@ ChartJS.register(
 function Chart({ title, label, dataset }) {
   // const [datas, setDatas] = useState([]);
 
+  /*   useEffect(() => {
+    async function getStats() {
+      try {
+        const response = await fetch("URL_DE_L_API_GRAFANA", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer VOTRE_CLE_API",
+          },
+        });
+        const result = await response.json();
+        setDatas(result);
+      } catch (error) {
+        console.error("getStats Error:", error);
+      }
+    }
+    getStats();
+  }, []); */
+
   const chart = {
     labels: dataset.map((item) => item.date),
     datasets: [
@@ -48,15 +66,6 @@ function Chart({ title, label, dataset }) {
         position: "top",
         labels: {
           color: "rgb(250, 250, 250)",
-        },
-      },
-      title: {
-        display: true,
-        text: title,
-        color: "rgb(250, 250, 250)",
-        font: {
-          size: 20,
-          weight: "bold",
         },
       },
     },
@@ -91,24 +100,12 @@ function Chart({ title, label, dataset }) {
 }
 
 export default function Stats() {
-  /*   useEffect(() => {
-    async function getStats() {
-      try {
-        const response = await fetch("URL_DE_L_API_GRAFANA", {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer VOTRE_CLE_API",
-          },
-        });
-        const result = await response.json();
-        setDatas(result);
-      } catch (error) {
-        console.error("getStats Error:", error);
-      }
-    }
-    getStats();
-  }, []); */
-
+  const getDateRange = (dataset) => {
+    const dates = dataset.map((data) => new Date(data.date));
+    const minDate = new Date(Math.min(...dates));
+    const maxDate = new Date(Math.max(...dates));
+    return { minDate, maxDate };
+  };
 
   const [selectedCard, setSelectedCard] = useState(0);
   const cards = [
@@ -121,22 +118,29 @@ export default function Stats() {
       title: "Total",
       label: "Nombre de malades total",
       dataset: fakeDatasCumulative,
-    }
-  ]
+    },
+  ];
   return (
     <>
       <section className="section-body">
         <h2>Nombre de nouveaux malades</h2>
         <div className="chart-btn-div">
-          {cards.map((card, index) => (
-            <button
-              key={index}
-              className={`chart-btn ${selectedCard === index ? "selected-btn" : ""}`}
-              onClick={() => setSelectedCard(index)}
-            >
-              {card.title}
-            </button>
-          ))}
+          {cards.map((card, index) => {
+            const { minDate, maxDate } = getDateRange(card.dataset);
+            return (
+              <div
+                key={index}
+                className={`chart-btn ${
+                  selectedCard === index ? "selected-btn" : ""
+                }`}
+                onClick={() => setSelectedCard(index)}
+              >
+                <p className="chart-btn-title">{card.title}</p>{" "}
+                <p>du {minDate.toLocaleDateString()}</p>
+                <p>au {maxDate.toLocaleDateString()}</p>
+              </div>
+            );
+          })}
         </div>
         <div className="chart-container">
           <Chart

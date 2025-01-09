@@ -15,6 +15,9 @@
     --backgroundDark: #1e293b;
     --backgroundDarkLess: #334155;
     --backgroundLight: #e2e8f0;
+
+    --chartShadow :  0 1px 5px 0 var(--backgroundDarkLess);
+    --chartShadowInset :  inset 0 1px 5px 0 var(--backgroundDarkLess);
 }
 
 /* manrope-latin-wght-normal */
@@ -204,21 +207,32 @@ footer > * {
 
 .chart-btn-div {
     width: 100%;
+    height: 120px;
     display: flex;
-    justify-content: center;
+    flex-wrap: nowrap;
+    padding: 5px;
     margin: 20px 0;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .chart-btn {
+    flex-shrink: 0;
+    width: 200px;
+    height: 100px;
     padding: 10px 20px;
-    margin: 0 10px;
+    margin: 5px;
     border-radius: 10px;
     border: none;
-    background: var(--primaryGradientBkg);
-    color: var(--white);
-    font-size: 18px;
-    font-weight: 400;
+    background: var(--backgroundLight);
+    color: var(--text);
     cursor: pointer;
+    box-shadow: var(--chartShadow);
+}
+.selected-btn {
+    box-shadow: var(--chartShadowInset);
+}
+.chart-btn-title {
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 .chart-container {
     width: 100%;
@@ -232,7 +246,7 @@ footer > * {
     padding: 20px;
     background: var(--primaryGradientBkg);
     border-radius: 10px;
-    box-shadow: 0 1px 5px 0 var(--backgroundDarkLess);
+    box-shadow: var(--chartShadow);
 }
 
 /* AJOUTER DES DONNEES */
