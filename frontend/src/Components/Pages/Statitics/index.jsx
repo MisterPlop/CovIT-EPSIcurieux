@@ -12,6 +12,8 @@ import {
 } from "chart.js";
 import { fakeDatasDaily, fakeDatasCumulative } from "./fakeDatas.js";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarWeek, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../Loader";
 
 ChartJS.register(
@@ -65,20 +67,20 @@ function Chart({ title, label, dataset }) {
         display: false,
         position: "top",
         labels: {
-          color: "rgb(250, 250, 250)",
+          color: "#0f172a",
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: "rgb(250, 250, 250)",
+          color: "#0f172a",
           display: false,
         },
       },
       y: {
         ticks: {
-          color: "rgb(250, 250, 250)",
+          color: "#0f172a",
         },
       },
     },
@@ -100,49 +102,50 @@ function Chart({ title, label, dataset }) {
 }
 
 export default function Stats() {
+  const cards = [
+    {
+      icon: <FontAwesomeIcon icon={faCalendarWeek} />,
+      title: "Hebdomadaire",
+      label: "Nombre de nouveaux malades par semaines",
+      dataset: fakeDatasDaily,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faGlobe} />,
+      title: "Total",
+      label: "Nombre de malades total",
+      dataset: fakeDatasCumulative,
+    },
+  ];
   const getDateRange = (dataset) => {
     const dates = dataset.map((data) => new Date(data.date));
     const minDate = new Date(Math.min(...dates));
     const maxDate = new Date(Math.max(...dates));
     return { minDate, maxDate };
   };
-
   const [selectedCard, setSelectedCard] = useState(0);
-  const cards = [
-    {
-      title: "Hebdomadaire",
-      label: "Nombre de nouveaux malades par semaines",
-      dataset: fakeDatasDaily,
-    },
-    {
-      title: "Total",
-      label: "Nombre de malades total",
-      dataset: fakeDatasCumulative,
-    },
-  ];
+  const { minDate, maxDate } = getDateRange(cards[selectedCard].dataset);
+
   return (
     <>
       <section className="section-body">
         <h2>Nombre de nouveaux malades</h2>
         <div className="chart-btn-div">
-          {cards.map((card, index) => {
-            const { minDate, maxDate } = getDateRange(card.dataset);
-            return (
-              <div
-                key={index}
-                className={`chart-btn ${
-                  selectedCard === index ? "selected-btn" : ""
-                }`}
-                onClick={() => setSelectedCard(index)}
-              >
-                <p className="chart-btn-title">{card.title}</p>{" "}
-                <p>du {minDate.toLocaleDateString()}</p>
-                <p>au {maxDate.toLocaleDateString()}</p>
-              </div>
-            );
-          })}
+          {cards.map((card, index) => (
+            <button
+              key={index}
+              className={`chart-btn ${
+                selectedCard === index ? "selected-btn" : ""
+              }`}
+              onClick={() => setSelectedCard(index)}
+            >
+              <p>{card.icon}</p><p>{card.title}</p>
+            </button>
+          ))}
         </div>
         <div className="chart-container">
+          <div className="chart-dates">
+            <p className="date">du {minDate.toLocaleDateString()} au {maxDate.toLocaleDateString()}</p>
+          </div>
           <Chart
             title={cards[selectedCard].title}
             label={cards[selectedCard].label}

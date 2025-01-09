@@ -80,11 +80,13 @@
     }
 
     /* STATISTICS */
-
+    .chart-btn-div {
+        overflow-x: visible;
+    }
     .chart-container {
         width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
+        max-width: 700px;
+        overflow-x: visible;
     }
 
     .chart-article {
@@ -92,11 +94,10 @@
     }
 
     .chart-card {
-        width: 49%;
+        width: 100%;
+        max-width: 700px;
         padding: 20px;
-        background: var(--primaryGradientBkg);
         border-radius: 10px;
-        box-shadow: 0 1px 5px 0 var(--backgroundDarkLess);
     }
 
 
