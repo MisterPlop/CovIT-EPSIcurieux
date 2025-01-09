@@ -24,27 +24,15 @@ ChartJS.register(
   Legend
 );
 
-export default function Stats() {
+function Chart({ title, label, dataset }) {
   // const [datas, setDatas] = useState([]);
 
-  const chartDataDaily = {
-    labels: fakeDatasDaily.map((item) => item.date),
+  const chart = {
+    labels: dataset.map((item) => item.date),
     datasets: [
       {
-        label: "Nombre de nouveaux malades  semaines",
-        data: fakeDatasDaily.map((item) => item.value),
-        fill: false,
-        borderColor: "rgb(245, 205, 115)",
-        tension: 0.1,
-      },
-    ],
-  };
-  const chartDataCumulative = {
-    labels: fakeDatasCumulative.map((item) => item.date),
-    datasets: [
-      {
-        label: "Nombre de malades total",
-        data: fakeDatasCumulative.map((item) => item.value),
+        label: label,
+        data: dataset.map((item) => item.value),
         fill: false,
         borderColor: "rgb(245, 205, 115)",
         tension: 0.1,
@@ -62,6 +50,15 @@ export default function Stats() {
           color: "rgb(250, 250, 250)",
         },
       },
+      title: {
+        display: true,
+        text: title,
+        color: "rgb(250, 250, 250)",
+        font: {
+          size: 20,
+          weight: "bold",
+        },
+      },
     },
     scales: {
       x: {
@@ -77,37 +74,23 @@ export default function Stats() {
       },
     },
   };
-  const optionsDaily = {
-    ...options,
-    plugins: {
-      ...options.plugins,
-      title: {
-        display: true,
-        text: 'Hebdomadaire', // Titre spécifique pour le graphique hebdomadaire
-        color: 'rgb(250, 250, 250)',
-        font: {
-          size: 20,
-          weight: 'bold',
-        },
-      },
-    },
-  };
-  const optionsCumulative = {
-    ...options,
-    plugins: {
-      ...options.plugins,
-      title: {
-        display: true,
-        text: 'Total', // Titre spécifique pour le graphique cumulatif
-        color: 'rgb(250, 250, 250)',
-        font: {
-          size: 20,
-          weight: 'bold',
-        },
-      },
-    },
-  };
 
+  return (
+    <>
+      <div className="chart-card">
+        {!chart ? (
+          <Loader />
+        ) : (
+          <>
+            <Line data={chart} options={options} />
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+export default function Stats() {
   /*   useEffect(() => {
     async function getStats() {
       try {
@@ -131,24 +114,16 @@ export default function Stats() {
       <section className="section-body">
         <h2>Nombre de nouveaux malades</h2>
         <div className="chart-container">
-            <div className="chart-card">
-              {!chartDataDaily ? (
-                <Loader />
-              ) : (
-                <>
-                  <Line data={chartDataDaily} options={optionsDaily} />
-                </>
-              )}
-            </div>
-            <div className="chart-card">
-              {!chartDataCumulative ? (
-                <Loader />
-              ) : (
-                <>
-                  <Line data={chartDataCumulative} options={optionsCumulative} />
-                </>
-              )}
-            </div>
+          <Chart
+            title="Hebdomadaire"
+            label="Nombre de nouveaux malades par semaines"
+            dataset={fakeDatasDaily}
+          />
+          <Chart
+            title="Total"
+            label="Nombre de malades total"
+            dataset={fakeDatasCumulative}
+          />
         </div>
       </section>
       <section className="section-end laptopAndDesktop-hidden"></section>
