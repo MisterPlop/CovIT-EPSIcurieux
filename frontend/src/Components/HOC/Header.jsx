@@ -34,11 +34,11 @@ function Header() {
       >
         <nav>
           <Link to="/">
-          <img src="CovITLogo-Full_White.png" alt="Logo CovIT" className="laptopAndDesktop-hidden"/>
+          <img src="CovITLogo-Text_White.png" alt="Logo CovIT" className="laptopAndDesktop-hidden"/>
             {!isHeaderOpen ? (
-              <img src="CovITLogo-White.png" alt="Logo CovIT" className="img-headerClose mobilAndTablet-hidden"/>
+              <img src="CovidLogoSolo.png" alt="Logo CovIT" className="img-headerClose mobilAndTablet-hidden"/>
             ) : (
-              <img src="CovITLogo-Full_White.png" alt="Logo CovIT" className="img-headerOpen mobilAndTablet-hidden"/>
+              <img src="CovITLogo-Text_White.png" alt="Logo CovIT" className="img-headerOpen mobilAndTablet-hidden"/>
             )}
           </Link>
           <NavLink to="/statistiques">
