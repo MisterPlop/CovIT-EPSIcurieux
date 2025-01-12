@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 
+import { getItemWithExpiration } from "../../Assets/Variables/functions";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
-  faCirclePlus,
-  faChalkboardUser,
+  faFilePen,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
+
+import CovITLogoSolo from "../../Assets/Images/CovITLogoSolo.png";
+import CovITLogoSoloTextWhite from "../../Assets/Images/CovITLogo-Text_White.png";
 
 function Header() {
   const { pathname } = useLocation();
@@ -19,7 +24,7 @@ function Header() {
     localStorage.setItem("isMenuOpen", !isHeaderOpen);
   };
 
-  console.log(isHeaderOpen);
+  const FAKETOKEN = getItemWithExpiration("fakeauth");
 
   return (
     <>
@@ -34,11 +39,23 @@ function Header() {
       >
         <nav>
           <Link to="/">
-          <img src="CovITLogo-Text_White.png" alt="Logo CovIT" className="laptopAndDesktop-hidden"/>
+            <img
+              src={CovITLogoSolo}
+              alt="Logo CovIT"
+              className="laptopAndDesktop-hidden"
+            />
             {!isHeaderOpen ? (
-              <img src="CovidLogoSolo.png" alt="Logo CovIT" className="img-headerClose mobilAndTablet-hidden"/>
+              <img
+                src={CovITLogoSolo}
+                alt="Logo CovIT"
+                className="img-headerClose mobilAndTablet-hidden"
+              />
             ) : (
-              <img src="CovITLogo-Text_White.png" alt="Logo CovIT" className="img-headerOpen mobilAndTablet-hidden"/>
+              <img
+                src={CovITLogoSoloTextWhite}
+                alt="Logo CovIT"
+                className="img-headerOpen mobilAndTablet-hidden"
+              />
             )}
           </Link>
           <NavLink to="/statistiques">
@@ -51,39 +68,44 @@ function Header() {
                   !isHeaderOpen ? "nav-text-hidden" : "nav-text-visible"
                 }`}
               >
-                Stats
-              </p>
-            </div>
-          </NavLink>
-          <NavLink to="/ajouter_des_donnees">
-            <div className="nav-tab">
-              <div className="nav-icon">
-                <FontAwesomeIcon icon={faCirclePlus} />
-              </div>
-              <p
-                className={`nav-text ${
-                  !isHeaderOpen ? "nav-text-hidden" : "nav-text-visible"
-                }`}
-              >
-                Add data
+                Observer
               </p>
             </div>
           </NavLink>
 
-          <NavLink to="/connexion">
-            <div className="nav-tab">
-              <div className="nav-icon">
-                <FontAwesomeIcon icon={faChalkboardUser} />
-              </div>
-              <p
-                className={`nav-text ${
-                  !isHeaderOpen ? "nav-text-hidden" : "nav-text-visible"
-                }`}
-              >
-                Tableau de bord
-              </p>
-            </div>
-          </NavLink>
+          {FAKETOKEN && (
+            <>
+              <NavLink to="/ajouter_des_donnees">
+                <div className="nav-tab">
+                  <div className="nav-icon">
+                    <FontAwesomeIcon icon={faFilePen} />
+                  </div>
+                  <p
+                    className={`nav-text ${
+                      !isHeaderOpen ? "nav-text-hidden" : "nav-text-visible"
+                    }`}
+                  >
+                    Gérer
+                  </p>
+                </div>
+              </NavLink>
+
+              <NavLink to="/profil">
+                <div className="nav-tab">
+                  <div className="nav-icon">
+                    <FontAwesomeIcon icon={faAddressCard} />
+                  </div>
+                  <p
+                    className={`nav-text ${
+                      !isHeaderOpen ? "nav-text-hidden" : "nav-text-visible"
+                    }`}
+                  >
+                    Profil
+                  </p>
+                </div>
+              </NavLink>
+            </>
+          )}
         </nav>
 
         <div className="icon-toggle_menu">
