@@ -79,6 +79,21 @@
         align-items: start;
     }
 
+    /* LOGIN PAGES */
+
+.log-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.login-form {
+    width: 50%;
+    max-width: 500px;
+}
+
     /* STATISTICS */
     .chart-btn-div {
         overflow-x: visible;

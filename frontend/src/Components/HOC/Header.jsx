@@ -75,7 +75,7 @@ function Header() {
 
           {FAKETOKEN && (
             <>
-              <NavLink to="/ajouter_des_donnees">
+              <NavLink to="/equipe/gestion_des_donnees">
                 <div className="nav-tab">
                   <div className="nav-icon">
                     <FontAwesomeIcon icon={faFilePen} />
@@ -90,7 +90,7 @@ function Header() {
                 </div>
               </NavLink>
 
-              <NavLink to="/profil">
+              <NavLink to="/equipe/profil">
                 <div className="nav-tab">
                   <div className="nav-icon">
                     <FontAwesomeIcon icon={faAddressCard} />

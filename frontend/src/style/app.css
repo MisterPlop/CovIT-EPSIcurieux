@@ -263,12 +263,8 @@ footer>* {
 }
 
 .logout {
-    position: absolute;
-    right: 0;
-    bottom: 50%;
-    transform: translateY(50%);
+    right: 5px;
     color: var(--primary);
-    cursor: pointer;
     z-index: 1;
     opacity: 0;
     animation: appear 0.4s ease 0.2s forwards;
@@ -306,6 +302,7 @@ footer>* {
 
 
 /* LOGIN PAGES */
+/* AJOUTER DES DONNEES */
 
 .log-section {
     display: flex;
@@ -315,7 +312,8 @@ footer>* {
     min-height: 80vh;
 }
 
-.login-form {
+.login-form,
+.add-datas-form {
     width: 90%;
     margin: 0 auto;
     display: flex;
@@ -323,15 +321,23 @@ footer>* {
     align-items: center;
     justify-content: center;
     padding: 20px;
+}
+.login-form {
     border-radius: 10px;
 }
+.add-datas-form {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--gold2);
+}
 
-.login-form label {
+.login-form label,
+.add-datas-form label {
     color: var(--text);
     margin-bottom: 10px;
 }
 
-.login-form input {
+.login-form input,
+.add-datas-form input {
     width: 100%;
     height: 40px;
     font-size: 18px;
@@ -343,13 +349,15 @@ footer>* {
     border-radius: 10px;
 }
 
-.login-form input::placeholder {
+.login-form input::placeholder,
+.add-datas-form input::placeholder {
     color: var(--backgroundDark);
     font-family: "Manrope Variable";
     font-weight: 200;
 }
 
-.login-form input:focus {
+.login-form input:focus,
+.add-datas-form input:focus {
     outline: 1px solid var(--gold2);
     background: var(--backgroundLight);
 }
@@ -361,9 +369,38 @@ footer>* {
     padding: 8px 16px;
     border-radius: 25px;
     border: none;
+    background-image: var(--primaryGradientBkg);
+}
+
+.login-form button {
     color: var(--white);
     background: var(--white);
     background-image: var(--primaryGradientBkg);
+}
+
+.addDatasOpen-btn,
+.add-datas-form button {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: fit-content;
+    height: 50px;
+    margin: 15px 0;
+    padding: 0 20px;
+    border-radius: 25px;
+    border: none;
+    color: var(--gold2);
+    background: transparent;
+}
+
+.add-datas-form button {
+    color: var(--white);
+    background: var(--goldGradientBkg);
+}
+
+.addDatasOpen-btn p,
+.add-datas-form button p {
+    margin-left: 10px;
 }
 
 .overline {
@@ -440,79 +477,7 @@ footer>* {
     box-shadow: var(--chartShadow);
 }
 
-/* AJOUTER DES DONNEES */
 
-.add-datas-form {
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: var(--primaryGradientBkg);
-    border-radius: 10px;
-    box-shadow: 0 1px 5px 0 var(--backgroundDarkLess);
-}
-
-.add-datas-form label {
-    color: var(--white);
-    font-weight: 400;
-    margin-bottom: 10px;
-    font-size: 18px;
-}
-
-.add-datas-form input {
-    width: 100%;
-    height: 30px;
-    font-size: 18px;
-    margin-bottom: 25px;
-    padding: 0 5px;
-    background: transparent;
-    border: none;
-    background: var(--whiter);
-}
-
-.add-datas-form input:focus {
-    height: 40px;
-    outline: none;
-    background: var(--white);
-}
-
-.add-datas-form button {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    margin: 15px 0;
-    border-radius: 50%;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    background: var(--gold);
-    background-image: linear-gradient(145deg, var(--gold2), var(--gold));
-    box-shadow: inset 1px 1px 0 var(--white), inset -1px -1px 0px var(--gold3);
-}
-
-.add-datas-form button::before {
-    position: absolute;
-    content: '';
-    width: 50px;
-    height: 50px;
-    border-radius: inherit;
-    background-color: transparent;
-    background-image: linear-gradient(145deg, var(--gold2), var(--gold));
-
-    z-index: -1;
-    border: 1px solid var(--primary);
-    box-shadow: 15px 15px 20px #005225, -15px -15px 20px #3e8d42,
-        inset 1px 1px 0 var(--white), inset -1px -1px 0px var(--gold3);
-}
-
-.add-datas-form button:hover {
-    transform: scale(1.02);
-}
 
 /* IMPRINTS */
 

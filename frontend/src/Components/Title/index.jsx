@@ -35,7 +35,7 @@ export default function Title({ title }) {
       <div className="login-menu">
         {!FAKETOKEN ? (
           <>
-            <Link to="/utilisateurs/connexion">
+            <Link to="/equipe/connexion">
               <FontAwesomeIcon icon={faCircleUser} size="lg"/>
             </Link>
           </>
@@ -50,7 +50,7 @@ export default function Title({ title }) {
               onClick={toggleLoginMenu}
             />
 
-              <Link to="/utilisateurs/deconnexion" className="logout">
+              <Link to="/equipe/deconnexion" className="logout">
                 <FontAwesomeIcon icon={faArrowRightFromBracket} />
               </Link>
           </>
