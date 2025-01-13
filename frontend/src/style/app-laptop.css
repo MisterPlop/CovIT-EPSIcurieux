@@ -81,21 +81,23 @@
 
     /* LOGIN PAGES */
 
-.log-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
-}
+    .log-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+    }
 
-.login-form {
-    width: 50%;
-    max-width: 500px;
-}
+    .login-form {
+        width: 50%;
+        max-width: 500px;
+    }
 
     /* STATISTICS */
     .chart-btn-div {
+        width: 50%;
+        max-width: 500px;
         overflow-x: visible;
     }
     .chart-container {
@@ -114,6 +116,25 @@
         padding: 20px;
         border-radius: 10px;
     }
+
+    /* ADD DATAS */
+
+    .add-datas-article {
+        width: 100%;
+    }
+
+    .add-datas-article form {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .form-group {
+        max-width: 250px;
+    }
+    .add-datas-article input {
+        width: 90%;
+    }
+
 
 
 }
