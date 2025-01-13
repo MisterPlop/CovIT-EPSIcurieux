@@ -10,6 +10,7 @@ function Form({ type }) {
 
   // const newUserId = uuidv4().slice(0, 16); // à chaque chargement du composant une chaine de 16 caractères aléatoire sera stocké // SIGNUP
 
+  const [users, setUsers] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,18 +27,41 @@ function Form({ type }) {
     }
   }, [FAKETOKEN, navigate]);
 
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const response = await fetch("/users.json", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          console.error("Erreur lors de la récupération des utilisateurs:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération des utilisateurs:", error);
+      }
+    }
+
+    fetchUsers();
+  }, []);
+
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (type === "in") {
-      setMsg("Connexion démo");
-      setItemWithExpiration("fakeauth", "juste pour la démo", 10080);
+    const user = users.find((u) => u.email === email && u.password === password);
+
+    if (user) {
+      setItemWithExpiration("fakeauth", user.id, 10080);
+      setItemWithExpiration("userRole", user.role, 10080);
+      setMsg("Connexion réussie");
       navigate("/");
-    }
-    if (type === "up") {
-      setMsg(
-        "Application non connecté à une base de données, pas de compte créé"
-      );
+    } else {
+      setMsg("Email ou mot de passe incorrect");
     }
   }
 

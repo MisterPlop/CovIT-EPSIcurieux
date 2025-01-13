@@ -24,29 +24,25 @@ function AccountSecurity() {
     <>
       <h3>Espace sensible</h3>
 
-      <p className="myinformations-bio">
+      <p className="informations-bio">
         Attention ici vous pouvez modifier votre mot de passe ou supprimer votre
         profil.
       </p>
 
-      <div className="myinformations">
-        <p className="myinformations-trickstrack">TricksTrack Sécurity</p>
-
         <button
-          className="myinformations-btn updateProfil"
+          className="security-btn"
           type="button"
           onClick={toggleEditIsActiv}
         >
           <FontAwesomeIcon icon={faPenToSquare} size="xl" className="icon" />
         </button>
         <button
-          className="myinformations-btn dangerZone"
+          className="security-btn dangerZone"
           type="button"
           onClick={toggleDeleteIsActiv}
         >
           <FontAwesomeIcon icon={faUserXmark} size="xl" className="icon" />
         </button>
-      </div>
 
       {!editIsActiv ? <></> : <UpdateSecurity />}
       {!deleteIsActiv ? <></> : <DeleteAccount />}

@@ -90,7 +90,7 @@ function Header() {
                 </div>
               </NavLink>
 
-              <NavLink to="/equipe/profil">
+              <NavLink to="/equipe/compte_utilisateur">
                 <div className="nav-tab">
                   <div className="nav-icon">
                     <FontAwesomeIcon icon={faAddressCard} />

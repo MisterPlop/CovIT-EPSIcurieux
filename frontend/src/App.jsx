@@ -12,6 +12,8 @@ import Signup from "./Components/Pages/Users/Connection/Signup";
 import Signin from "./Components/Pages/Users/Connection/Signin";
 import SignOut from "./Components/Pages/Users/Connection/Signout";
 import ManageDatas from "./Components/Pages/Users/ManageDatas";
+import UserAccount from "./Components/Pages/Users/Profiles";
+
 
 import NotFound from "./Components/Pages/NotFound";
 
@@ -34,6 +36,7 @@ function App() {
           <Route path="connexion" element={<HOC child={Signin} title={"Se connecter"}/>} />
           <Route path="deconnexion" element={<HOC child={SignOut} title={"Se déconnecter"}/>} />
           <Route path="gestion_des_donnees" element={<HOC child={ManageDatas} title={"Gestion des données"}/>} />
+          <Route path="compte_utilisateur" element={<HOC child={UserAccount} title={"Compte Utilisateur"}/>} />
         </Route>
 
       </Routes>

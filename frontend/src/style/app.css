@@ -7,6 +7,7 @@
     --text: #0f172a;
     --white: #f1f5f9;
     --whiter: #f8fafc;
+    --Red: rgb(199, 18, 18);
     --primaryGradientBkg: linear-gradient(50deg, var(--primary), rgba(255, 255, 255, 0) 90.71%),
         linear-gradient(200deg, var(--primary), rgba(255, 255, 255, 0) 30.71%),
         linear-gradient(127deg, var(--primary), rgba(255, 255, 255, 0) 70.71%),
@@ -79,6 +80,10 @@ h4 {
 .gold {
     color: var(--text) !important;
     background: var(--goldGradientBkg) !important;
+}
+
+.red {
+    color: var(--Red) !important;
 }
 
 a {
@@ -302,7 +307,8 @@ footer>* {
 
 
 /* LOGIN PAGES */
-/* AJOUTER DES DONNEES */
+/* ADD DATAS */
+/* UPDATE PROFILE */
 
 .log-section {
     display: flex;
@@ -312,6 +318,7 @@ footer>* {
     min-height: 80vh;
 }
 
+.informations-update,
 .login-form,
 .add-datas-form {
     width: 90%;
@@ -322,9 +329,11 @@ footer>* {
     justify-content: center;
     padding: 20px;
 }
+
 .login-form {
     border-radius: 10px;
 }
+
 .add-datas-form {
     margin-bottom: 25px;
     border-bottom: 1px solid var(--gold2);
@@ -338,12 +347,14 @@ footer>* {
     justify-content: center;
 }
 
+.informations-update label,
 .login-form label,
 .add-datas-form label {
     color: var(--text);
     margin-bottom: 10px;
 }
 
+.informations-update input,
 .login-form input,
 .add-datas-form input {
     width: 100%;
@@ -355,8 +366,11 @@ footer>* {
     border: none;
     background: var(--white);
     border-radius: 10px;
+    font-family: "Manrope Variable";
+    font-weight: 400;
 }
 
+.informations-update input::placeholder,
 .login-form input::placeholder,
 .add-datas-form input::placeholder {
     color: var(--backgroundDark);
@@ -364,12 +378,14 @@ footer>* {
     font-weight: 200;
 }
 
+.informations-update input:focus,
 .login-form input:focus,
 .add-datas-form input:focus {
     outline: 1px solid var(--gold2);
     background: var(--backgroundLight);
 }
 
+.informations-update button,
 .login-form button {
     width: fit-content;
     font-size: 18px;
@@ -380,6 +396,7 @@ footer>* {
     background-image: var(--primaryGradientBkg);
 }
 
+.informations-update button,
 .login-form button {
     color: var(--white);
     background: var(--white);
@@ -485,6 +502,114 @@ footer>* {
     box-shadow: var(--chartShadow);
 }
 
+
+/* USER ACCOUNT */
+
+.user_account-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 30;
+}
+
+.user_account-nav button {
+    width: 75px;
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    background: var(--backgroundDark);
+    color: var(--white);
+}
+
+.user_account {
+    width: 100%;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.informations {
+    position: relative;
+    width: 340px;
+    height: 220px;
+    background: var(--goldGradientBkg);
+    color: var(--text);
+    border-radius: 15px;
+    box-shadow: var(--chartShadow);
+    margin-bottom: 25px;
+}
+
+.informations p,
+.informations-btn {
+    position: absolute;
+}
+
+.informations-CovIT {
+    left: 25px;
+    top: 50px;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.informations-position {
+    left: 25px;
+    top: 50%;
+}
+
+.informations-name,
+.informations-motDePasse {
+    left: 25px;
+    bottom: 50px;
+}
+
+.informations-email {
+    left: 25px;
+    bottom: 25px;
+}
+
+.informations-btn,
+.security-btn,
+.danger-btn {
+    right: 30px;
+    top: 30px;
+    background: radial-gradient(circle, var(--gold), var(--gold2));
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 0px 3px var(--gold3);
+}
+
+
+.security-btn {
+    margin-bottom: 25px;
+}
+
+.informations .non-absolute {
+    position: static;
+    margin-bottom: 25px;
+}
+
+.icon {
+    color: var(--text);
+}
+
+.informations-bio {
+    width: 300px;
+    margin-bottom: 25px;
+}
+
+.dangerZone {
+    background: radial-gradient(circle, rgb(255, 129, 129), Var(--Red));
+    box-shadow: 0px 0px 3px rgb(255, 129, 129);
+    border: none;
+}
 
 
 /* IMPRINTS */
