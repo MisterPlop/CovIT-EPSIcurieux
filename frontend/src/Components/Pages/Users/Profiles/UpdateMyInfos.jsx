@@ -1,9 +1,6 @@
 import { useState } from "react";
 
-// import { getItemWithExpiration } from "../../../../Assets/Variables/functions"; // pour version API
-
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+// import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
 
 export default function UpdateProfile({ user }) {
   const [firstname, setFirstname] = useState(user.firstname);
@@ -11,39 +8,37 @@ export default function UpdateProfile({ user }) {
   const [position, setPosition] = useState(user.position);
   const [email, setEmail] = useState(user.email);
   // const [msg, setMsg] = useState("");
-  // const [msg2, setMsg2] = useState("");
+  const [msg2, setMsg2] = useState("");
 
-  /*  async function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    
-    const TOKEN = getItemWithExpiration("auth");
-    
-     const res = await fetch(FETCH_URL + "users/update/" + user.id, {
+
+    // const TOKEN = getItemWithExpiration("auth");
+
+    try {
+    /* const res = await fetch(FETCH_URL + "users/update/" + user.id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authentication" : `Bearer ${TOKEN}`,
+        Authentication: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({ pseudo, firstname, bio, email, id: user.id }),
     });
-    const json = await res.json();
-    setMsg(json.msg);
-    setMsg2(json.msg2);
-  };
-
-  const handleChange = (e) => {
-    const input = e.target.value;
-    if (input.length <= 200) {
-      setBio(input);
+    const json = await res.json(); */
+    setMsg2("Mise à jour non fonctionnelle pour le moment");
+    // setMsg("Mise à jour réussie");
+    } catch (error) {
+      console.error(error);
+      setMsg2("Mise à jour échouée");
     }
-  }; */
+  }
 
   return (
     <>
       <h3>Modifier vos informations</h3>
 
       <div className="informations-update">
-        <form /* onSubmit={handleSubmit} */>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="firstname">Prénom</label>
           <input
             type="text"
@@ -84,12 +79,10 @@ export default function UpdateProfile({ user }) {
               setEmail(e.target.value);
             }}
           />
-          {/* {msg && <p className="green non-absolute">{msg}</p>}
-          {msg2 && <p className="red non-absolute">{msg2}</p>} */}
+          {/* {msg && <p className="green non-absolute">{msg}</p>} */}
+          {msg2 && <p className="red non-absolute">{msg2}</p>}
 
-          <button type="submit">
-            Modifier
-          </button>
+          <button type="submit">Modifier</button>
         </form>
       </div>
     </>

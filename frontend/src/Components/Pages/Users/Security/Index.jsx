@@ -41,7 +41,7 @@ function AccountSecurity() {
           type="button"
           onClick={toggleDeleteIsActiv}
         >
-          <FontAwesomeIcon icon={faUserXmark} size="xl" className="icon" />
+          <FontAwesomeIcon icon={faUserXmark} size="lg" className="icon" />
         </button>
 
       {!editIsActiv ? <></> : <UpdateSecurity />}

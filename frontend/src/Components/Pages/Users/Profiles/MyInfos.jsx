@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 // import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
+import { users } from "../../../../Assets/Variables/users";
 
 import UpdateInfos from "./UpdateMyInfos";
 
@@ -17,21 +18,12 @@ function MyInfos() {
   useEffect(() => {
     async function getUserInfos() {
       try {
-        const response = await fetch("/users.json", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (response.ok) {
-          const users = await response.json();
+        if (users) {
           const user = users.find((u) => u.id === 1);
           setUser(user);
         } else {
           console.error(
-            "Erreur lors de la récupération des informations utilisateur:",
-            response.statusText
+            "Erreur lors de la récupération des informations utilisateur:"
           );
         }
       } catch (error) {

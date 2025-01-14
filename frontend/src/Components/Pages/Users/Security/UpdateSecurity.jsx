@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 
 function UpdateSecurity() {
     
