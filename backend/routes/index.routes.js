@@ -5,7 +5,7 @@ import userRoute from "./userRoutes.js";
 const router = Router();
 
 
-router.use("/api/v1/products", userRoute);
+router.use("/user", userRoute);
 
 
 

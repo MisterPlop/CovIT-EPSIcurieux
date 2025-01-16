@@ -6,10 +6,9 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 // Gestion des erreurs non attrapées
-process.on('uncaughtException', (err) => {
-  console.error('ERREUR NON ATTRAPÉE 💥', err.name, err.message);
-  console.error('Stack:', err.stack);
-  process.exit(1);
+process.on('unhandledRejection', (err) => {
+  console.error('PROMESSE NON GÉRÉE 💥', err);
+  server.close(() => process.exit(1));
 });
 
 // Démarrage du serveur

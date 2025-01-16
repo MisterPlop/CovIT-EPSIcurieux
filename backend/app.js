@@ -5,6 +5,9 @@ const cors = require('cors');
 
 const app = express();
 
+import router from "./routes/index.routes.js";
+
+
 // Middlewares
 app.use(helmet()); // Sécurité
 app.use(cors()); // Gestion des CORS
@@ -20,12 +23,15 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/magrossebite', (req, res) => {
+
+app.get('/api/version', (req, res) => {
     res.status(200).json({
         status: 'success',
         message: 'Version 1 de l\'API',
     });
 });
+
+app.use('/api', router);
 
 // Middleware de gestion globale des erreurs
 app.use((err, req, res, next) => {

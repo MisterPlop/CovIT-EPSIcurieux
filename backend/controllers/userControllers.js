@@ -13,7 +13,7 @@ const getUsers = async (req, res) => {
 // Ajouter un nouvel utilisateur
 const createUser = async (req, res) => {
     try {
-        const { name, email } = req.body;
+        const { name, email, password } = req.body;
         const newUser = await User.create({ name, email, password });
         res.status(201).json(newUser);
     } catch (error) {
@@ -21,4 +21,14 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { getUsers, createUser };
+const testUser = async (req, res) => {
+    try {
+        console.log("Hello")
+        print("Hello World!")
+        res.status(201).json();
+    } catch{
+        res.status(500).json({error: 'Prout'})
+    }
+}
+
+module.exports = { getUsers, createUser, testUser };
