@@ -25,8 +25,8 @@ app.get('/api/magrossebite', (req, res) => {
         status: 'success',
         message: 'Version 1 de l\'API',
     });
-    
-    };
+});
+
 // Middleware de gestion globale des erreurs
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
