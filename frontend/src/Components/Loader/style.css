@@ -1,0 +1,44 @@
+:root {
+    --primary: #166534;
+}
+
+.loader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 50px 0;
+
+	.bar {
+		width: 10px;
+		height: 5px;
+		background: var(--primary);
+		margin: 2px;
+		animation: bar 1s infinite linear;
+
+		&:nth-child(1) {
+			animation-delay: 0s;
+		}
+
+		&:nth-child(2) {
+			animation-delay: 0.25s;
+		}
+
+		&:nth-child(3) {
+			animation-delay: 0.5s;
+		}
+	}
+}
+
+@keyframes bar {
+	0% {
+		transform: scaleY(1) scaleX(0.5);
+	}
+
+	50% {
+		transform: scaleY(10) scaleX(1);
+	}
+
+	100% {
+		transform: scaleY(1) scaleX(0.5);
+	}
+}
