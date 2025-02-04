@@ -1,5 +1,7 @@
 @media screen and (min-width: 426px) {
 
-
-
+    .allDatas-article input {
+        width: 50%;
+    }
+    
 }
