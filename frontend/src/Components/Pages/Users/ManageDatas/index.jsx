@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DataTable from "./DatasTable";
 
-import mergedData from "./merged_data.csv";
+import mergedData from "../../../../Assets/Variables/merged_data.csv";
 import AddDatas from "./AddDatas";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
