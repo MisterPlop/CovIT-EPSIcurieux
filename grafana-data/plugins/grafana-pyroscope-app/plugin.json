@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "app",
+  "name": "Explore Profiles",
+  "id": "grafana-pyroscope-app",
+  "autoEnabled": true,
+  "backend": false,
+  "dependencies": {
+    "grafanaDependency": ">=11.2.0",
+    "plugins": []
+  },
+  "info": {
+    "keywords": ["app", "pyroscope", "profiling", "explore", "profiles", "performance"],
+    "description": "Continuous profiling service powered by Grafana Pyroscope",
+    "author": {
+      "name": "Grafana"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "screenshots": [
+      {
+        "name": "Hero Image",
+        "path": "img/hero-image.png"
+      }
+    ],
+    "version": "0.1.17",
+    "updated": "2024-11-19",
+    "links": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/grafana/explore-profiles"
+      },
+      {
+        "name": "Report bug",
+        "url": "https://github.com/grafana/explore-profiles/issues/new"
+      }
+    ]
+  },
+  "includes": [
+    {
+      "type": "page",
+      "name": "Explore profiles",
+      "path": "/a/grafana-pyroscope-app/profiles-explorer",
+      "role": "Viewer",
+      "addToNav": true,
+      "defaultNav": false
+    },
+    {
+      "type": "page",
+      "name": "Ad hoc view",
+      "path": "/a/grafana-pyroscope-app/ad-hoc",
+      "role": "Viewer",
+      "addToNav": true,
+      "defaultNav": false
+    }
+  ]
+}

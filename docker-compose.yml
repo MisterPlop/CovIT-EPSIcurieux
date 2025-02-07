@@ -7,7 +7,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
-      # - postgres_data:/var/lib/postgresql/data
       - ./init-scripts/postgres:/docker-entrypoint-initdb.d
       - ./shared:/shared
     ports:
@@ -54,8 +53,9 @@ services:
   grafana:
     image: grafana/grafana:main
     container_name: grafana
+    user: "${UID}:${GID}"
     volumes:
-      - grafana_data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
       - ./shared:/shared
     environment:
       - GF_SECURITY_ADMIN_USER=admin
@@ -68,8 +68,12 @@ services:
     # restart: unless-stopped
 
 volumes:
-  # postgres_data:
-  grafana_data:
+  grafana-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./grafana-data
 
 networks:
   app_network:
