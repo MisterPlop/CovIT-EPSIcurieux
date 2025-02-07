@@ -1,4 +1,4 @@
-import React, { /* useEffect, */ useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,11 +10,13 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { fakeDatasDaily, fakeDatasCumulative } from "./fakeDatas.js";
+import Papa from "papaparse"; // CSV parser
+import mergedData from "../../../Assets/Variables/merged_data.csv";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarWeek, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faPerson, faRankingStar, faHeadSideCough, faHandHoldingHeart, faSkull } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../Loader";
+import TopCountriesByCases from "./TopCountriesByCases";
 
 ChartJS.register(
   CategoryScale,
@@ -26,29 +28,10 @@ ChartJS.register(
   Legend
 );
 
-function Chart({ title, label, dataset }) {
-  // const [datas, setDatas] = useState([]);
-
-  /*   useEffect(() => {
-    async function getStats() {
-      try {
-        const response = await fetch("URL_DE_L_API_GRAFANA", {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer VOTRE_CLE_API",
-          },
-        });
-        const result = await response.json();
-        setDatas(result);
-      } catch (error) {
-        console.error("getStats Error:", error);
-      }
-    }
-    getStats();
-  }, []); */
+function Chart({ label, dataset }) {
 
   const chart = {
-    labels: dataset.map((item) => item.date),
+    labels: dataset.map((item) => item.Date),
     datasets: [
       {
         label: label,
@@ -89,69 +72,150 @@ function Chart({ title, label, dataset }) {
   return (
     <>
       <div className="chart-card">
-        {!chart ? (
-          <Loader />
-        ) : (
-          <>
-            <Line data={chart} options={options} />
-          </>
-        )}
+        <Line data={chart} options={options} />
       </div>
     </>
   );
 }
 
 export default function Stats() {
-  const cards = [
-    {
-      icon: <FontAwesomeIcon icon={faCalendarWeek} />,
-      title: "Hebdomadaire",
-      label: "Nombre de nouveaux malades par semaines",
-      dataset: fakeDatasDaily,
-    },
-    {
-      icon: <FontAwesomeIcon icon={faGlobe} />,
-      title: "Total",
-      label: "Nombre de malades total",
-      dataset: fakeDatasCumulative,
-    },
-  ];
-  const getDateRange = (dataset) => {
-    const dates = dataset.map((data) => new Date(data.date));
+  const [allData, setAllData] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("France");
+  const [selectedMetric, setSelectedMetric] = useState("Cases");
+  const [selectedCard, setSelectedCard] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Papa.parse(mergedData, { // A modifier par un appel API
+      download: true,
+      header: true,
+      complete: (result) => {
+        // Convert numeric values from strings to numbers
+        const parsedData = result.data.map(row => ({
+          ...row,
+          Population: Number(row.Population),
+          Cases: Number(row.Cases),
+          Active: Number(row.Active),
+          Recovered: Number(row.Recovered),
+          Deaths: Number(row.Deaths),
+        }));
+        console.log(parsedData);
+        setAllData(parsedData);
+        setLoading(false);
+      },
+    });
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  const handleCountryChange = (e) => {
+    setSelectedCountry(e.target.value);
+  };
+
+  const handleMetricChange = (metric, index) => {
+    setSelectedMetric(metric);
+    setSelectedCard(index);
+  };
+
+  const filteredData = allData.filter((row) => row.Country === selectedCountry);
+
+  const dataset = filteredData.map((row) => ({
+    Date: row.Date,
+    value: row[selectedMetric],
+  }));
+
+  const getDateRange = (data) => {
+    const dates = data.map((item) => new Date(item.Date));
     const minDate = new Date(Math.min(...dates));
     const maxDate = new Date(Math.max(...dates));
     return { minDate, maxDate };
   };
-  const [selectedCard, setSelectedCard] = useState(0);
-  const { minDate, maxDate } = getDateRange(cards[selectedCard].dataset);
+
+  const { minDate, maxDate } = getDateRange(filteredData);
+
+  const countries = [...new Set(allData.map((row) => row.Country))];
+
+  const population = filteredData.length > 0 ? filteredData[0].Population : 0;
+
+  const cards = [
+    {
+      icon: <FontAwesomeIcon icon={faPerson} />,
+      title: "Population",
+      metric: "Population",
+      population: `${population}`
+    },
+    {
+      icon: <FontAwesomeIcon icon={faRankingStar} />,
+      title: "Cases",
+      metric: "Cases",
+    },
+    {
+      icon: <FontAwesomeIcon icon={faHeadSideCough} />,
+      title: "Active",
+      metric: "Active",
+    },
+    {
+      icon: <FontAwesomeIcon icon={faHandHoldingHeart} />,
+      title: "Recovered",
+      metric: "Recovered",
+    },
+    {
+      icon: <FontAwesomeIcon icon={faSkull} />,
+      title: "Deaths",
+      metric: "Deaths",
+    },
+  ];
 
   return (
     <>
       <section className="section-body">
-        <h2>Nombre de nouveaux malades</h2>
-        <div className="chart-btn-div">
-          {cards.map((card, index) => (
-            <button
-              key={index}
-              className={`chart-btn ${
-                selectedCard === index ? "selected-btn" : ""
-              }`}
-              onClick={() => setSelectedCard(index)}
-            >
-              <p>{card.icon}</p><p>{card.title}</p>
-            </button>
-          ))}
-        </div>
-        <div className="chart-container">
-          <div className="chart-dates">
-            <p className="date">du {minDate.toLocaleDateString()} au {maxDate.toLocaleDateString()}</p>
+        <h2>Statistiques du Covid</h2>
+
+        <div className="stats-container">
+          <div className="stats-part part1">
+            <div className="chart-select-div">
+              <label htmlFor="country-select">Select Country: </label>
+              <select id="country-select" value={selectedCountry} onChange={handleCountryChange}>
+                <option value="" disabled>Choisissez un pays</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country} >
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="chart-btn-div">
+              {cards.map((card, index) => (
+                <button
+                  disabled={index === 0} // Disable the population button
+                  key={index}
+                  className={`chart-btn ${selectedCard === index ? "selected-btn" : ""} ${index === 0 ? "population-btn" : ""}`}
+                  onClick={() => handleMetricChange(card.metric, index)}
+                >
+                  <p>{card.icon} {card.population}</p><p className="metric-text">{card.title}</p>
+                </button>
+              ))}
+            </div>
+            <div className="chart-container">
+              <div className="chart-dates">
+                <p className="date">du {minDate.toLocaleDateString()} au {maxDate.toLocaleDateString()}</p>
+              </div>
+              {selectedCountry && selectedMetric !== "Population" && (
+                <Chart
+                  title={selectedCountry}
+                  label={selectedMetric}
+                  dataset={dataset}
+                />
+              )}
+            </div>
           </div>
-          <Chart
-            title={cards[selectedCard].title}
-            label={cards[selectedCard].label}
-            dataset={cards[selectedCard].dataset}
-          />
+          <div className="stats-part part2">
+            <TopCountriesByCases />
+          </div>
         </div>
+
       </section>
       <section className="section-end laptopAndDesktop-hidden"></section>
     </>

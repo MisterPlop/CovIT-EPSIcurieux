@@ -6,9 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddDatas() {
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
-  const [input3, setInput3] = useState("");
+  const [country, setCountry] = useState("");
+  const [date, setDate] = useState("");
+  const [population, setPopulation] = useState("");
+  const [cases, setCases] = useState("");
+  const [active, setActive] = useState("");
+  const [recovered, setRecovered] = useState("");
+  const [deaths, setDeaths] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -16,9 +20,13 @@ export default function AddDatas() {
     try {
       setLoading(true);
       console.log("Soumission des données :");
-      console.log(input1);
-      console.log(input2);
-      console.log(input3);
+      console.log(country);
+      console.log(date);
+      console.log(population);
+      console.log(cases);
+      console.log(active);
+      console.log(recovered);
+      console.log(deaths);
     } catch (error) {
       console.error(
         "Une erreur s'est produite pendant la soumission des données : ",
@@ -32,33 +40,73 @@ export default function AddDatas() {
   return (
     <form onSubmit={handleSubmit} className="add-datas-form">
       <div className="form-group">
-        <label htmlFor="input1">Donnée1</label>
+        <label htmlFor="country">Villes</label>
         <input
-          placeholder="Entrez une donnée"
+          placeholder="Pays"
           type="text"
-          name="input1"
-          value={input1}
-          onChange={(e) => setInput1(e.target.value)}
+          name="country"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="input2">Donnée2</label>
+        <label htmlFor="date">Date</label>
         <input
-          placeholder="Entrez une donnée"
+          placeholder="Date"
           type="text"
-          name="input2"
-          value={input2}
-          onChange={(e) => setInput2(e.target.value)}
+          name="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="input3">Donnée3</label>
+        <label htmlFor="population">Population</label>
         <input
-          placeholder="Entrez une donnée"
+          placeholder="Population"
           type="text"
-          name="input3"
-          value={input3}
-          onChange={(e) => setInput3(e.target.value)}
+          name="population"
+          value={population}
+          onChange={(e) => setPopulation(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="cases">Cas</label>
+        <input
+          placeholder="Cas"
+          type="text"
+          name="cases"
+          value={cases}
+          onChange={(e) => setCases(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="active">Active</label>
+        <input
+          placeholder="Acitve"
+          type="text"
+          name="active"
+          value={active}
+          onChange={(e) => setActive(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="recovered">Guéris</label>
+        <input
+          placeholder="Recovered"
+          type="text"
+          name="recovered"
+          value={recovered}
+          onChange={(e) => setRecovered(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="deaths">Morts</label>
+        <input
+          placeholder="Deaths"
+          type="text"
+          name="deaths"
+          value={deaths}
+          onChange={(e) => setDeaths(e.target.value)}
         />
       </div>
       <button type="submit">

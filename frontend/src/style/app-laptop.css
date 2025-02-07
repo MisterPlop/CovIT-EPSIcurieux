@@ -21,6 +21,7 @@
         flex-grow: 1;
         transition: width 0.3s ease;
         margin: 0 25px 0 0;
+        align-items: start;
     }
 
     /* HEADER */
@@ -73,9 +74,16 @@
         margin-left: 15px;
     }
 
+    /* TITLE */
+
+    .section-title {
+        width: 95%;
+    }
+
     /* PAGES */
 
     .section-body {
+        width: 95%;
         align-items: start;
     }
 
@@ -95,14 +103,23 @@
     }
 
     /* STATISTICS */
-    .chart-btn-div {
-        width: 50%;
-        max-width: 500px;
-        overflow-x: visible;
+
+    .stats-container {
+        flex-direction: row;
+        align-items: start;
+        justify-content: space-around;
     }
+
+    .part1 {
+        width: 60%;
+    }
+
+    .part2 {
+        width: 35%;
+    }
+
     .chart-container {
         width: 100%;
-        max-width: 700px;
         overflow-x: visible;
     }
 
@@ -112,7 +129,6 @@
 
     .chart-card {
         width: 100%;
-        max-width: 700px;
         padding: 20px;
         border-radius: 10px;
     }
@@ -128,9 +144,11 @@
         flex-direction: row;
         flex-wrap: wrap;
     }
+
     .form-group {
         max-width: 250px;
     }
+
     .add-datas-article input {
         width: 90%;
     }

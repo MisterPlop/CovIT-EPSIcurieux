@@ -330,6 +330,7 @@ footer>* {
     padding: 20px;
 }
 
+.chart-select-div,
 .login-form {
     border-radius: 10px;
 }
@@ -354,12 +355,13 @@ footer>* {
     margin-bottom: 10px;
 }
 
+.chart-select-div select,
+.allDatas-article input,
 .informations-update input,
 .login-form input,
 .add-datas-form input {
     width: 100%;
-    height: 40px;
-    font-size: 18px;
+    height: 35px;
     margin-bottom: 25px;
     padding: 0 15px;
     background: transparent;
@@ -370,6 +372,11 @@ footer>* {
     font-weight: 400;
 }
 
+.chart-select-div select {
+    width: 200px;
+}
+
+.allDatas-article input::placeholder,
 .informations-update input::placeholder,
 .login-form input::placeholder,
 .add-datas-form input::placeholder {
@@ -378,6 +385,8 @@ footer>* {
     font-weight: 200;
 }
 
+.chart-select-div select:focus,
+.allDatas-article input:focus,
 .informations-update input:focus,
 .login-form input:focus,
 .add-datas-form input:focus {
@@ -409,9 +418,9 @@ footer>* {
     align-items: center;
     justify-content: space-evenly;
     width: fit-content;
-    height: 50px;
+    height: 35px;
     margin: 15px 0;
-    padding: 0 20px;
+    padding: 0 10px;
     border-radius: 25px;
     border: none;
     color: var(--gold2);
@@ -441,7 +450,112 @@ footer>* {
     text-align: center;
 }
 
+/* DATA TABLES */
+
+.allDatas-article {
+    width: 100%;
+    margin: auto;
+}
+
+table {
+    max-height: 500px;
+    margin: 25px 0;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+    overflow-y: scroll;
+    border-bottom: 4px solid var(--backgroundDark);
+    transition: border-radius 0.3s;
+}
+
+table {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    transition: border-radius 0.3s ease-in-out;
+}
+
+table.scroll-left {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 0;
+}
+
+table.scroll-right {
+    border-top-left-radius: 0;
+    border-top-right-radius: 15px;
+}
+
+thead {
+    background: var(--backgroundDark);
+    color: var(--white);
+}
+
+th {
+    cursor: pointer;
+}
+
+th p {
+    width: 120px;
+}
+
+th .table-icon {
+    margin-left: 5px;
+}
+
+th,
+td {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--primaryB);
+    text-align: center;
+}
+
+th:hover {
+    background-color: var(--gold3);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--backgroundLight);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: var(--backgroundDark);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: var(--gray);
+    cursor: not-allowed;
+}
+
+.pagination span {
+    margin: 0 10px;
+}
+
 /* STATISTICS */
+
+.countries_cards-container,
+.stats-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stats-part {
+    width: 100%;
+    margin-bottom: 50px;
+}
 
 .chart-btn-div {
     width: 100%;
@@ -451,6 +565,7 @@ footer>* {
     overflow-x: auto;
 }
 
+.countries_card,
 .chart-btn {
     flex-shrink: 0;
     width: 125px;
@@ -461,17 +576,26 @@ footer>* {
     border: none;
     background: var(--backgroundLight);
     color: var(--text);
-    cursor: pointer;
     text-align: left;
+}
+.chart-btn:hover {
+    box-shadow: var(--chartShadow);
 }
 
 .chart-btn p:first-child {
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .selected-btn {
     background: var(--backgroundDarkLess);
     color: var(--white);
+}
+.population-btn {
+    background: var(--primaryB);
+}
+.population-btn:hover {
+    transform: scale(0);
 }
 
 .chart-dates {
@@ -479,9 +603,10 @@ footer>* {
     display: flex;
 }
 
-.date {
+.date,
+.chart-select-div label {
     font-weight: 200;
-    margin-left: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
 }
 
@@ -499,6 +624,28 @@ footer>* {
     margin: 10px 0;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: var(--chartShadow);
+}
+
+.part2 {
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-select-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.countries_card {
+    text-align: center;
+    width: 200px;
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background: var(--gold);
     box-shadow: var(--chartShadow);
 }
 
