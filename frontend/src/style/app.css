@@ -562,6 +562,7 @@ tbody tr:nth-child(even) {
     display: flex;
     flex-wrap: nowrap;
     padding: 5px;
+    margin-bottom: 25px;
     overflow-x: auto;
 }
 
@@ -627,11 +628,6 @@ tbody tr:nth-child(even) {
     box-shadow: var(--chartShadow);
 }
 
-.part2 {
-    align-items: center;
-    justify-content: center;
-}
-
 .chart-select-div {
     display: flex;
     flex-direction: column;
@@ -648,7 +644,6 @@ tbody tr:nth-child(even) {
     background: var(--gold);
     box-shadow: var(--chartShadow);
 }
-
 
 /* USER ACCOUNT */
 
