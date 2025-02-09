@@ -26,6 +26,11 @@ const testConnection = async () => {
   }
 };
 
+sequelize.sync({ alter: true })  // Synchronisation des tables
+  .then(() => console.log("✅ Synchronisation des modèles Sequelize réussie !"))
+  .catch((error) => console.error("❌ Erreur de synchronisation :", error));
+
+
 // Exécute le test de connexion au démarrage
 testConnection();  
 

@@ -3,23 +3,25 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 
-import router from "./routes/index.routes.js"; 
+import router from "./routes/index.routes.js";
+import covidRoutes from "./routes/covidRoutes.js";
 
 const app = express();
 
-// Middlewares
-app.use(helmet()); // Sécurité
-app.use(cors()); // Gestion des CORS
-app.use(morgan("dev")); // Logging
-app.use(express.json({ limit: "10kb" })); // Parser JSON avec limite
+// ✅ Middlewares (à déclarer AVANT les routes)
+app.use(helmet()); 
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
-// Routes
+// ✅ Routes API
+app.use("/api/covid19", covidRoutes);
+app.use("/api", router);
+
+// ✅ Route par défaut
 app.get("/", (req, res) => {
-  res.status(200).json({
-    status: "success",
-    message: "Bienvenue sur l'API",
-  });
+  res.status(200).json({ message: "Bienvenue sur l'API Covid19" });
 });
 
 app.get("/api/version", (req, res) => {
@@ -29,9 +31,17 @@ app.get("/api/version", (req, res) => {
   });
 });
 
-app.use("/api", router);
+// ✅ Vérifier les routes enregistrées après l’ajout des routes
+setTimeout(() => {
+  console.log("📌 Routes enregistrées :");
+  app._router.stack.forEach((r) => {
+    if (r.route && r.route.path) {
+        console.log(`🚀 ${r.route.path}`);
+    }
+  });
+}, 100);
 
-// Middleware de gestion globale des erreurs
+// ✅ Middleware de gestion des erreurs (en dernier)
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
@@ -42,4 +52,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-export default app; // ✅ Utiliser `export default` au lieu de `module.exports`
+export default app;
