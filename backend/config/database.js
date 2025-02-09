@@ -1,5 +1,7 @@
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+
+dotenv.config(); // ✅ Charge les variables d'environnement
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -7,24 +9,24 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    dialect: 'postgres',
+    dialect: "postgres", 
     port: process.env.DB_PORT,
-    logging: false, // Désactive les logs SQL par défaut
+    logging: false, // Désactiver les logs SQL (optionnel)
   }
 );
 
 // Fonction pour tester la connexion
 const testConnection = async () => {
-    try {
-      await sequelize.authenticate();
-      console.log('✅ Connexion à la base de données établie avec succès.');
-      return true;
-    } catch (error) {
-      console.error('❌ Impossible de se connecter à la base de données:', error);
-      process.exit(1); // Arrête l'application
-    }
-  };
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Connexion à la base de données établie avec succès.");
+  } catch (error) {
+    console.error("❌ Impossible de se connecter à la base de données:", error);
+    process.exit(1); // Arrête l'application en cas d'échec
+  }
+};
+
 // Exécute le test de connexion au démarrage
 testConnection();  
 
-module.exports = sequelize;
+export default sequelize;
