@@ -106,7 +106,7 @@
 
     .stats-container {
         flex-direction: row;
-        align-items: start;
+        align-items: end;
         justify-content: space-around;
     }
 
@@ -131,6 +131,15 @@
         width: 100%;
         padding: 20px;
         border-radius: 10px;
+    }
+
+    .chart-select-div {
+        flex-direction: row;
+        justify-content: start;
+    }
+    .chart-select-div label,
+    .chart-select-div select {
+        margin-right: 10px;
     }
 
     /* ADD DATAS */

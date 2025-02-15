@@ -1,170 +1,116 @@
 import React, { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import Papa from "papaparse"; // CSV parser
-import mergedData from "../../../Assets/Variables/merged_data.csv";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPerson, faRankingStar, faHeadSideCough, faHandHoldingHeart, faSkull } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../Loader";
-import TopCountriesByCases from "./TopCountriesByCases";
+import countries from "../../../Assets/Variables/countries"; // import the list of countries
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend
-);
+/**
+ * Generate an array of dates from start to end
+ * @param {string} start - Start date in the format "YYYY-MM-DD"
+ * @param {string} end - End date in the format "YYYY-MM-DD"
+ * @returns {Array} - Array of dates
+ * 
+ */
+const generateMonthlyDates = (start, end) => {
+  let dates = [];
+  let currentDate = new Date(start);
+  while (currentDate <= new Date(end)) {
+    dates.push(new Date(currentDate));
+    currentDate.setMonth(currentDate.getMonth() + 1);
+  }
+  return dates;
+};
 
-function Chart({ label, dataset }) {
-
-  const chart = {
-    labels: dataset.map((item) => item.Date),
-    datasets: [
-      {
-        label: label,
-        data: dataset.map((item) => item.value),
-        fill: false,
-        borderColor: "rgb(245, 205, 115)",
-        tension: 0.1,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-        position: "top",
-        labels: {
-          color: "#0f172a",
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          color: "#0f172a",
-          display: false,
-        },
-      },
-      y: {
-        ticks: {
-          color: "#0f172a",
-        },
-      },
-    },
-  };
-
-  return (
-    <>
-      <div className="chart-card">
-        <Line data={chart} options={options} />
-      </div>
-    </>
-  );
-}
+/**
+ * @returns {Array} - Array of dates
+ * For the current project it works we now that the start date is "2020-01-01" and the end date is "2022-05-01"
+ * But in a real project we should pass the start and end date as parameters with an API call
+ * Same for the COUNTRIES, COUNTRIES POPULATION list above and the METRICS list below
+ */
+const availableDates = generateMonthlyDates("2020-01-01", "2022-05-01");
 
 export default function Stats() {
-  const [allData, setAllData] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("France");
+  const [countryPopulation, setCountryPopulation] = useState(0);
   const [selectedMetric, setSelectedMetric] = useState("Cases");
   const [selectedCard, setSelectedCard] = useState(1);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    Papa.parse(mergedData, { // A modifier par un appel API
-      download: true,
-      header: true,
-      complete: (result) => {
-        // Convert numeric values from strings to numbers
-        const parsedData = result.data.map(row => ({
-          ...row,
-          Population: Number(row.Population),
-          Cases: Number(row.Cases),
-          Active: Number(row.Active),
-          Recovered: Number(row.Recovered),
-          Deaths: Number(row.Deaths),
-        }));
-        console.log(parsedData);
-        setAllData(parsedData);
-        setLoading(false);
-      },
-    });
-  }, []);
-
-  if (loading) {
-    return <Loader />;
-  }
+  const [top3PanelIdGrafana, setTop3PanelIdGrafana] = useState("");
+  const [titleTrad, setTtitleTrad] = useState("");
+  const [startDate, setStartDate] = useState(availableDates[0]);
+  const [endDate, setEndDate] = useState(availableDates[availableDates.length - 1]);
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
   };
+
+  const panelIds = {
+    "Cases": 7,
+    "Active": 6,
+    "Recovered": 5,
+    "Deaths": 8
+  };
+  const panelTitle = {
+    "Cases": "Cas Totaux",
+    "Active": "Cas Actifs",
+    "Recovered": "Guérisons",
+    "Deaths": "Morts"
+  };
+  
+  useEffect(() => {
+    const country = countries.find(c => c.name === selectedCountry);
+    if (country) {
+      setCountryPopulation(country.population);
+    }
+    setTop3PanelIdGrafana(panelIds[selectedMetric] || 7);
+    setTtitleTrad(panelTitle[selectedMetric] || "Cas Totaux");
+  }, [selectedCountry, selectedMetric, top3PanelIdGrafana]);
 
   const handleMetricChange = (metric, index) => {
     setSelectedMetric(metric);
     setSelectedCard(index);
   };
 
-  const filteredData = allData.filter((row) => row.Country === selectedCountry);
-
-  const dataset = filteredData.map((row) => ({
-    Date: row.Date,
-    value: row[selectedMetric],
-  }));
-
-  const getDateRange = (data) => {
-    const dates = data.map((item) => new Date(item.Date));
-    const minDate = new Date(Math.min(...dates));
-    const maxDate = new Date(Math.max(...dates));
-    return { minDate, maxDate };
+  const handleStartDateChange = (e) => {
+    setStartDate(new Date(e.target.value));
   };
 
-  const { minDate, maxDate } = getDateRange(filteredData);
+  const handleEndDateChange = (e) => {
+    setEndDate(new Date(e.target.value));
+  };
 
-  const countries = [...new Set(allData.map((row) => row.Country))];
-
-  const population = filteredData.length > 0 ? filteredData[0].Population : 0;
+  const dateToTimestamp = (date) => Math.floor(new Date(date).getTime());
 
   const cards = [
     {
       icon: <FontAwesomeIcon icon={faPerson} />,
       title: "Population",
       metric: "Population",
-      population: `${population}`
+      population: `${countryPopulation}`
     },
     {
       icon: <FontAwesomeIcon icon={faRankingStar} />,
-      title: "Cases",
+      title: "Cas Totaux",
       metric: "Cases",
+      urlGrafana: "7"
     },
     {
       icon: <FontAwesomeIcon icon={faHeadSideCough} />,
-      title: "Active",
+      title: "Cas Actifs",
       metric: "Active",
+      urlGrafana: "6"
     },
     {
       icon: <FontAwesomeIcon icon={faHandHoldingHeart} />,
-      title: "Recovered",
+      title: "Guérisons",
       metric: "Recovered",
+      urlGrafana: "5"
     },
     {
       icon: <FontAwesomeIcon icon={faSkull} />,
-      title: "Deaths",
+      title: "Morts",
       metric: "Deaths",
+      panelIdGrafana: "8"
     },
   ];
 
@@ -175,17 +121,17 @@ export default function Stats() {
 
         <div className="stats-container">
           <div className="stats-part part1">
-            <div className="chart-select-div">
-              <label htmlFor="country-select">Select Country: </label>
+            {<div className="chart-select-div">
+              <label htmlFor="country-select">Pays: </label>
               <select id="country-select" value={selectedCountry} onChange={handleCountryChange}>
                 <option value="" disabled>Choisissez un pays</option>
                 {countries.map((country, index) => (
-                  <option key={index} value={country} >
-                    {country}
+                  <option key={index} value={country.name} >
+                    {country.name}
                   </option>
                 ))}
               </select>
-            </div>
+            </div>}
             <div className="chart-btn-div">
               {cards.map((card, index) => (
                 <button
@@ -198,21 +144,46 @@ export default function Stats() {
                 </button>
               ))}
             </div>
+            <div className="chart-select-div">
+              <label>Période :</label>
+              <select value={startDate.toISOString().split("T")[0]} onChange={handleStartDateChange}>
+                {availableDates.map((date, index) => (
+                  <option key={index} value={date.toISOString().split("T")[0]}>
+                    {date.toLocaleDateString()}
+                  </option>
+                ))}
+              </select>
+              <select value={endDate.toISOString().split("T")[0]} onChange={handleEndDateChange}>
+                {availableDates.map((date, index) => (
+                  <option key={index} value={date.toISOString().split("T")[0]}>
+                    {date.toLocaleDateString()}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="chart-container">
-              <div className="chart-dates">
-                <p className="date">du {minDate.toLocaleDateString()} au {maxDate.toLocaleDateString()}</p>
-              </div>
-              {selectedCountry && selectedMetric !== "Population" && (
-                <Chart
-                  title={selectedCountry}
-                  label={selectedMetric}
-                  dataset={dataset}
-                />
-              )}
+              {selectedCountry && selectedMetric !== "Population" ? (
+                <iframe
+                  src={`http://192.168.1.26:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=${dateToTimestamp(
+                    startDate
+                  )}&to=${dateToTimestamp(
+                    endDate
+                  )}&timezone=browser&var-country=${selectedCountry}&var-column=${selectedMetric}&theme=light&panelId=3&__feature.dashboardSceneSolo`} // ne pas oublier de maj l'ip
+                  width="100%"
+                  height="350"
+                  frameborder="0"
+                ></iframe>
+              ) : (<Loader />)}
             </div>
           </div>
           <div className="stats-part part2">
-            <TopCountriesByCases />
+            {/* TOP 3 Dynamic  URL grafana */}
+            <h3>Top 3 des {titleTrad}</h3>
+            <iframe src={`http://192.168.1.26:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=1577867308000&to=1651409420000&timezone=browser&var-country=$__all&var-column=cases&editIndex=0&theme=light&panelId=${top3PanelIdGrafana}&__feature.dashboardSceneSolo`}
+              width="100%"
+              height="350"
+              frameborder="0"
+            ></iframe>
           </div>
         </div>
 
