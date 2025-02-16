@@ -11,11 +11,11 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     dialect: "postgres",
     port: process.env.DB_PORT || 5432,
-    logging: console.log, // ✅ Active les logs SQL
+    logging: console.log, // Active les logs SQL
   }
 );
 
-// 🔥 Tester la connexion et voir la base sélectionnée
+// Tester la connexion et voir la base sélectionnée
 (async () => {
   try {
     await sequelize.authenticate();

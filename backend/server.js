@@ -8,13 +8,13 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// ✅ Routes unifiées sous "/api"
+// Routes unifiées sous "/api"
 app.use("/api", routes);
 
-// ✅ Intégrer Swagger
+// Intégrer Swagger
 swaggerConfig(app);
 
-// ✅ Synchroniser la BDD et démarrer le serveur
+// Synchroniser la BDD et démarrer le serveur
 const PORT = process.env.PORT || 5000;
 (async () => {
   try {

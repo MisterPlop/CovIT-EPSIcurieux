@@ -10,10 +10,10 @@ import {
 const router = express.Router();
 
 
-router.get("/", getCovidData); // Récupérer les données Covid avec filtres et pagination
-router.get("/stats", getCovidStats); // Récupérer les statistiques globales
-router.post("/", createCovidEntry); // Ajouter une nouvelle entrée
-router.put("/:id", updateCovidEntry); // Modifier une entrée existante
-router.delete("/:id", deleteCovidEntry); // Supprimer une entrée
+router.get("/get-data", getCovidData); // Récupérer les données Covid avec filtres et pagination
+router.get("/get-stats", getCovidStats); // Récupérer les statistiques globales
+router.post("/create-data", createCovidEntry); // Ajouter une nouvelle entrée
+router.put("/change-data:id", updateCovidEntry); // Modifier une entrée existante
+router.delete("/delete-data:id", deleteCovidEntry); // Supprimer une entrée
 
 export default router;
