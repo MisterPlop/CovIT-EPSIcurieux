@@ -8,7 +8,11 @@ export class DataManager {
         this.repository = new DataRepository();
     }
 
-    async addCovidData(covidData: CovidData) {
+    async getCovidDataByCountry(country: string): Promise<CovidData[]> {
+        return this.repository.getCovidDataByCountry(country);
+    }
+
+    async addCovidData(covidData: CovidData): Promise<number> {
         return this.repository.addCovidData(covidData);
     }
     

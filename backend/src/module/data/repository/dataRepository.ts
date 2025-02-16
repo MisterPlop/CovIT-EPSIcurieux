@@ -23,10 +23,27 @@ export class DataRepository {
             });
     }
 
-    async addCovidData(covidData: CovidData) {
+    async getCovidDataByCountry(country: string) {
+        const query = `
+            SELECT * FROM covid19
+            WHERE country = $1;
+        `;
+        const values = [country];
+        
+        try {
+            const result = await this.client.query(query, values);
+            return result.rows;
+        } catch (error) {
+            console.error('Error executing query:', error);
+            throw error;
+        }
+    }
+
+    async addCovidData(covidData: CovidData): Promise<number> {
         const query = `
             INSERT INTO covid19 (country, date, population, cases, active, recovered, deaths)
-            VALUES ($1, $2, $3, $4, $5, $6, $7);
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id;
         `;
         const values = [
             covidData.country,
@@ -39,7 +56,8 @@ export class DataRepository {
         ];
 
         try {
-            return await this.client.query(query, values);
+            const result = await this.client.query(query, values);
+            return result.rows[0].id;
         } catch (error) {
             console.error('Error executing query:', error);
             throw error;

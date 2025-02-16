@@ -13,6 +13,49 @@ const dataController = new DataController();
 
 /**
  * @swagger
+ * /covid19/getCovidDataByCountry:
+ *   get:
+ *     summary: Get COVID data for a specific country
+ *     tags: [Data]
+ *     parameters:
+ *       - in: query
+ *         name: country
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Country name to fetch COVID data for
+ *     responses:
+ *       200:
+ *         description: COVID data for the specified country
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 country:
+ *                   type: string
+ *                 date:
+ *                   type: string
+ *                   format: date
+ *                 population:
+ *                   type: integer
+ *                 cases:
+ *                   type: integer
+ *                 active:
+ *                   type: integer
+ *                 recovered:
+ *                   type: integer
+ *                 deaths:
+ *                   type: integer
+ *       404:
+ *         description: Country not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/getCovidDataByCountry', dataController.getCovidDataByCountry);
+
+/**
+ * @swagger
  * /covid19/addCovidData:
  *   post:
  *     summary: Add COVID data
