@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                        // Version cible de JavaScript
+    "module": "commonjs",                       // Type de module à utiliser
+    "esModuleInterop": true,                    // Compatibilité avec les modules ES
+    "forceConsistentCasingInFileNames": true,   // Assurer une casse cohérente pour les fichiers
+    "strict": true,                             // Activer le mode strict
+    "skipLibCheck": true,                       // Ignorer les vérifications des types dans les librairies
+    "outDir": "./dist",                         // Dossier de sortie pour les fichiers compilés
+    "rootDir": "./src",                         // Dossier source de TypeScript
+    "moduleResolution": "node",                 // Résolution des modules compatible avec Node.js
+    "resolveJsonModule": true                   // Autoriser l'importation de fichiers JSON
+  },
+  "include": [
+    "src/**/*.ts"                               // Inclure tous les fichiers .ts dans src
+  ],
+  "exclude": [
+    "node_modules"                              // Exclure le dossier node_modules
+  ]
+}

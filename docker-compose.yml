@@ -22,7 +22,7 @@ services:
     volumes:
       - ./backend:/app
       - ./shared:/shared
-    command: sh -c "npm install && npm start"
+    command: sh -c "npm install && npx tsc && npm start"
     ports:
       - "3000:3000"
     depends_on:
