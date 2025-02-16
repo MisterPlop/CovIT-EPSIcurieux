@@ -7,6 +7,50 @@ const dataController = new DataController();
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     CovidData:
+ *       type: object
+ *       required:
+ *         - country
+ *         - date
+ *         - population
+ *         - cases
+ *         - active
+ *         - recovered
+ *         - deaths
+ *       properties:
+ *         country:
+ *           type: string
+ *           description: Nom du pays
+ *         date:
+ *           type: string
+ *           format: date
+ *           description: Date des données
+ *         population:
+ *           type: integer
+ *           description: Population totale du pays
+ *         cases:
+ *           type: integer
+ *           description: Nombre total de cas confirmés
+ *         active:
+ *           type: integer
+ *           description: Nombre de cas actifs
+ *         recovered:
+ *           type: integer
+ *           description: Nombre de cas guéris
+ *         deaths:
+ *           type: integer
+ *           description: Nombre de décès
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Data
  *   description: Data management
@@ -16,7 +60,9 @@ const dataController = new DataController();
  * @swagger
  * /covid19/getCovidDataByCountry:
  *   get:
- *     summary: Get COVID data for a specific country
+ *     summary: Obtenir les données COVID pour un pays spécifique
+ *     security:
+ *       - BearerAuth: []
  *     tags: [Data]
  *     parameters:
  *       - in: query
@@ -24,42 +70,31 @@ const dataController = new DataController();
  *         schema:
  *           type: string
  *         required: true
- *         description: Country name to fetch COVID data for
+ *         description: Nom du pays pour lequel récupérer les données
  *     responses:
  *       200:
- *         description: COVID data for the specified country
+ *         description: Données COVID pour le pays spécifié
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 country:
- *                   type: string
- *                 date:
- *                   type: string
- *                   format: date
- *                 population:
- *                   type: integer
- *                 cases:
- *                   type: integer
- *                 active:
- *                   type: integer
- *                 recovered:
- *                   type: integer
- *                 deaths:
- *                   type: integer
+ *               $ref: '#/components/schemas/CovidData'
+ *       401:
+ *         description: Non autorisé - Token JWT manquant ou invalide
  *       404:
- *         description: Country not found
+ *         description: Pays non trouvé
  *       500:
- *         description: Internal server error
+ *         description: Erreur serveur interne
  */
+
 router.get('/getCovidDataByCountry', authMiddleware, dataController.getCovidDataByCountry);
 
 /**
  * @swagger
  * /covid19/addCovidData:
  *   post:
- *     summary: Add COVID data
+ *     summary: Ajouter des données COVID
+ *     security:
+ *       - BearerAuth: []
  *     tags: [Data]
  *     requestBody:
  *       required: true
@@ -71,38 +106,16 @@ router.get('/getCovidDataByCountry', authMiddleware, dataController.getCovidData
  *               covid19:
  *                 type: array
  *                 items:
- *                   type: object
- *                   required:
- *                     - country
- *                     - date
- *                     - population
- *                     - cases
- *                     - active
- *                     - recovered
- *                     - deaths
- *                   properties:
- *                     country:
- *                       type: string
- *                     date:
- *                       type: string
- *                       format: date
- *                     population:
- *                       type: integer
- *                     cases:
- *                       type: integer
- *                     active:
- *                       type: integer
- *                     recovered:
- *                       type: integer
- *                     deaths:
- *                       type: integer
+ *                   $ref: '#/components/schemas/CovidData'
  *     responses:
  *       201:
- *         description: COVID data added successfully
+ *         description: Données COVID ajoutées avec succès
+ *       401:
+ *         description: Non autorisé - Token JWT manquant ou invalide
  *       400:
- *         description: Bad request (missing fields)
+ *         description: Requête invalide (champs manquants)
  *       500:
- *         description: Error adding data
+ *         description: Erreur lors de l'ajout des données
  */
 router.post('/addCovidData', authMiddleware, dataController.addCovidData);
 
@@ -110,7 +123,9 @@ router.post('/addCovidData', authMiddleware, dataController.addCovidData);
  * @swagger
  * /covid19/editCovidData:
  *   put:
- *     summary: Update COVID data entry
+ *     summary: Mettre à jour une entrée de données COVID
+ *     security:
+ *       - BearerAuth: []
  *     tags: [Data]
  *     requestBody:
  *       required: true
@@ -121,50 +136,26 @@ router.post('/addCovidData', authMiddleware, dataController.addCovidData);
  *             properties:
  *               covid19:
  *                 type: object
- *                 required:
- *                   - id
- *                   - country
- *                   - date
- *                   - population
- *                   - cases
- *                   - active
- *                   - recovered
- *                   - deaths
- *                 properties:
- *                   id:
- *                     type: integer
- *                     description: Unique identifier of the record to update
- *                   country:
- *                     type: string
- *                     description: Name of the country
- *                   date:
- *                     type: string
- *                     format: date
- *                     description: Date of the record
- *                   population:
- *                     type: integer
- *                     description: Total population of the country
- *                   cases:
- *                     type: integer
- *                     description: Total number of confirmed cases
- *                   active:
- *                     type: integer
- *                     description: Number of active cases
- *                   recovered:
- *                     type: integer
- *                     description: Number of recovered cases
- *                   deaths:
- *                     type: integer
- *                     description: Number of deaths
+ *                 allOf:
+ *                   - $ref: '#/components/schemas/CovidData'
+ *                   - type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         description: Identifiant unique de l'enregistrement à mettre à jour
+ *                     required:
+ *                       - id
  *     responses:
  *       200:
- *         description: COVID data updated successfully
+ *         description: Données COVID mises à jour avec succès
+ *       401:
+ *         description: Non autorisé - Token JWT manquant ou invalide
  *       400:
- *         description: Bad request (missing fields or invalid data)
+ *         description: Requête invalide (champs manquants ou données invalides)
  *       404:
- *         description: Entry not found
+ *         description: Entrée non trouvée
  *       500:
- *         description: Internal server error
+ *         description: Erreur serveur interne
  */
 router.put('/editCovidData', authMiddleware, dataController.editCovidData);
 
@@ -172,7 +163,9 @@ router.put('/editCovidData', authMiddleware, dataController.editCovidData);
  * @swagger
  * /covid19/deleteCovidData:
  *   delete:
- *     summary: Delete COVID data entry
+ *     summary: Supprimer une entrée de données COVID
+ *     security:
+ *       - BearerAuth: []
  *     tags: [Data]
  *     parameters:
  *       - in: query
@@ -180,16 +173,18 @@ router.put('/editCovidData', authMiddleware, dataController.editCovidData);
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID of the record to delete
+ *         description: ID de l'enregistrement à supprimer
  *     responses:
  *       200:
- *         description: COVID data deleted successfully
+ *         description: Données COVID supprimées avec succès
+ *       401:
+ *         description: Non autorisé - Token JWT manquant ou invalide
  *       400:
- *         description: Bad request (invalid ID)
+ *         description: Requête invalide (ID invalide)
  *       404:
- *         description: Entry not found
+ *         description: Entrée non trouvée
  *       500:
- *         description: Internal server error
+ *         description: Erreur serveur interne
  */
 router.delete('/deleteCovidData', authMiddleware, dataController.deleteCovidData);
 
