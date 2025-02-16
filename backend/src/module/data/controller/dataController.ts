@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { DataManager } from '../manager/dataManager';
 import { HttpMessages } from '../../../resources/enums';
+import { AuthRequest } from '../../../middleware/auth';
 
 const dataManager: DataManager = new DataManager();
 
@@ -9,7 +10,11 @@ export class DataController {
     constructor() {
     }
 
-    async getCovidDataByCountry(req: Request, res: Response) {
+    async getCovidDataByCountry(req: AuthRequest, res: Response) {
+        if (!req.user || req.user.profil !== "admin"){
+            res.status(401).json({ message: "Utilisateur non autorisé" });
+            return;
+        }
         const country = req.query.country;
         if (country) {
             try {
@@ -24,7 +29,11 @@ export class DataController {
         }
     }
 
-    async addCovidData(req: Request, res: Response) : Promise<any> {
+    async addCovidData(req: AuthRequest, res: Response) : Promise<any> {
+        if (!req.user || req.user.profil !== "admin"){
+            res.status(401).json({ message: "Utilisateur non autorisé" });
+            return;
+        }
         const body = req.body;
         if (body && Array.isArray(body.covid19)) {
             try {
@@ -39,7 +48,7 @@ export class DataController {
                     });
                     results.push({ id });
                 }
-                return res.status(201).json({ 
+                res.status(201).json({ 
                     results, 
                     message: HttpMessages.DATA_ADDED_SUCCESSFULLY 
                 });
@@ -52,7 +61,11 @@ export class DataController {
         }
     }
 
-    async editCovidData(req: Request, res: Response) {
+    async editCovidData(req: AuthRequest, res: Response) {
+        if (!req.user || req.user.profil !== "admin"){
+            res.status(401).json({ message: "Utilisateur non autorisé" });
+            return;
+        }
         const body = req.body;
         if(body && body.covid19){
             const { id, country, date, population, cases, active, recovered, deaths } = body.covid19;
@@ -74,7 +87,11 @@ export class DataController {
         }
     }
 
-    async deleteCovidData(req: Request, res: Response) {
+    async deleteCovidData(req: AuthRequest, res: Response) {
+        if (!req.user || req.user.profil !== "admin"){
+            res.status(401).json({ message: "Utilisateur non autorisé" });
+            return;
+        }
         if(req.query.id){
             const id = parseInt(req.query.id as string);
             try {

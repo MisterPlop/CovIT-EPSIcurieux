@@ -1,26 +1,12 @@
 import { Client } from 'pg';
-import { databaseConfig } from '../../../config/database';
+import { PostgreMiddleware } from '../../../middleware/postgre';
 import { CovidData } from '../../../resources/types';
 
 export class DataRepository {
     private client: Client;
 
     constructor() {
-        this.client = new Client({
-            host: databaseConfig.host,
-            port: databaseConfig.port,
-            database: databaseConfig.database,
-            user: databaseConfig.user,
-            password: databaseConfig.password
-        });
-        
-        this.client.connect()
-            .then(() => {
-            console.log('Successfully connected to the database');
-            })
-            .catch(err => {
-            console.error('Failed to connect to database:', err);
-            });
+        this.client = PostgreMiddleware.getInstance().getClient();
     }
 
     async getCovidDataByCountry(country: string) {
