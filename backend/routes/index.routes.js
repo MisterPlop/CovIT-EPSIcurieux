@@ -1,14 +1,16 @@
 import express from "express";
-import { getUsers, createUser, testUser } from "../controllers/userControllers.js"; // ✅ Vérifie que ce fichier existe
+import userRoutes from "./userRoutes.js";  // routes utilisateurs
+import covidRoutes from "./covidRoutes.js"; // routes COVID-19
 
 const router = express.Router();
 
-router.get("/getusers", getUsers);
-router.post("/createuser", createUser);
-router.get("/test", testUser);
+// Regroupe toutes les routes sous "/api"
+router.use("/users", userRoutes);
+router.use("/covid19", covidRoutes);
 
-// router.get("*", (req, res) => {
-//     res.status(404).json({ msg: "not found" });
-// });
+// Gère les routes non trouvées
+router.all("*", (req, res) => {
+  res.status(404).json({ msg: "Route non trouvée" });
+});
 
 export default router;

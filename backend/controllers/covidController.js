@@ -19,6 +19,12 @@ const covidSchema = Joi.object({
     confirmed_cases: Joi.number().integer().min(0).required(),
     deaths_reported: Joi.number().integer().min(0).required(),
     recovered_cases: Joi.number().integer().min(0).required(),
+    active_cases: Joi.number().integer().min(0).optional(),
+    new_cases: Joi.number().integer().min(0).optional(),
+    new_deaths: Joi.number().integer().min(0).optional(),
+    new_recovered: Joi.number().integer().min(0).optional(),
+    deaths_per_100_cases: Joi.number().precision(2).optional(),
+    recovered_per_100_cases: Joi.number().precision(2).optional(),
 });
 
 // Récupérer les données Covid avec filtres et pagination
@@ -32,14 +38,10 @@ export const getCovidData = async (req, res) => {
             return res.status(400).json({ error: "Les paramètres start_date et end_date sont requis." });
         }
 
-        const startDateFormatted = new Date(start_date).toISOString().split("T")[0];
-        const endDateFormatted = new Date(end_date).toISOString().split("T")[0];
         const offset = (parseInt(page) - 1) * parseInt(limit);
 
-        console.log("✅ Dates formatées :", startDateFormatted, endDateFormatted);
-
         const data = await Covid19.findAll({
-            where: { date_reported: { [Op.between]: [startDateFormatted, endDateFormatted] } },
+            where: { date_reported: { [Op.between]: [start_date, end_date] } },
             order: [["date_reported", "DESC"]],
             limit: parseInt(limit),
             offset: offset,
@@ -134,3 +136,4 @@ export const deleteCovidEntry = async (req, res) => {
         res.status(500).json({ error: "Erreur serveur", details: error.message });
     }
 };
+

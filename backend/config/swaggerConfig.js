@@ -5,7 +5,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API Covid19 - Documentation",
+      title: "API COVID-19",
       version: "1.0.0",
       description: "Documentation de l'API Covid19 avec Swagger",
     },

@@ -1,27 +1,26 @@
-import app from "./app.js";
-import dotenv from "dotenv"; 
-import setupSwagger from "./config/swaggerConfig.js";
-import covidRoutes from "./routes/covidRoutes.js"; 
+import express from "express";
+import dotenv from "dotenv";
+import routes from "./routes/index.routes.js"; // On importe l’index des routes
+import sequelize from "./config/database.js";
+import swaggerConfig from "./config/swaggerConfig.js";
 
-// Configuration des variables d'environnement
 dotenv.config();
-const PORT = process.env.PORT || 3000;
+const app = express();
+app.use(express.json());
 
-// Gestion des erreurs non attrapées
-process.on("unhandledRejection", (err) => {
-  console.error("PROMESSE NON GÉRÉE 💥", err);
-  server.close(() => process.exit(1));
-});
+// ✅ Routes unifiées sous "/api"
+app.use("/api", routes);
 
-// Configuration de Swagger
-setupSwagger(app);
+// ✅ Intégrer Swagger
+swaggerConfig(app);
 
-// Utilisation des routes API
-app.use("/api/covid19", covidRoutes);  // ✅ Vérifie que "covidRoutes" est bien importé
-
-// Démarrage du serveur
-const server = app.listen(PORT, "0.0.0.0", () => {  
-  console.log(`🚀 Serveur accessible sur http://0.0.0.0:${PORT}`);
-});
-
-
+// ✅ Synchroniser la BDD et démarrer le serveur
+const PORT = process.env.PORT || 5000;
+(async () => {
+  try {
+    await sequelize.sync(); // Synchronisation des modèles
+    app.listen(PORT, () => console.log(`🚀 Serveur démarré sur le port ${PORT}`));
+  } catch (error) {
+    console.error("❌ Erreur de connexion à la base :", error);
+  }
+})();

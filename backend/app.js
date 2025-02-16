@@ -4,20 +4,17 @@ import helmet from "helmet";
 import cors from "cors";
 
 import router from "./routes/index.routes.js";
-import covidRoutes from "./routes/covidRoutes.js";
 
 const app = express();
 
-// ✅ Middlewares (à déclarer AVANT les routes)
+// ✅ Middlewares
 app.use(helmet()); 
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 // ✅ Routes API
-app.use("/api/covid19", covidRoutes);
 app.use("/api", router);
 
 // ✅ Route par défaut
@@ -32,7 +29,7 @@ app.get("/api/version", (req, res) => {
   });
 });
 
-// ✅ Vérifier les routes enregistrées après l’ajout des routes
+// ✅ Vérification des routes enregistrées (pour debug)
 setTimeout(() => {
   console.log("📌 Routes enregistrées :");
   app._router.stack.forEach((r) => {
@@ -42,13 +39,11 @@ setTimeout(() => {
   });
 }, 100);
 
-// ✅ Middleware de gestion des erreurs (en dernier)
+// ✅ Middleware de gestion des erreurs
 app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
-
-  res.status(err.statusCode).json({
-    status: err.status,
+  console.error("❌ ERREUR :", err.message);
+  res.status(err.statusCode || 500).json({
+    status: "error",
     message: err.message,
   });
 });

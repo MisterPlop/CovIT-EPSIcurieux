@@ -3,8 +3,8 @@ import { getUsers, createUser, testUser } from "../controllers/userControllers.j
 
 const router = express.Router();
 
-router.get("/getusers", getUsers);
-router.post("/creatuser", createUser);
-router.get("/test", testUser);
+router.get("/", getUsers); // GET /users
+router.post("/", createUser); // POST /users
+router.get("/test", testUser); // Test route
 
 export default router;
