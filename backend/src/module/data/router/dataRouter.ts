@@ -68,23 +68,33 @@ router.get('/getCovidDataByCountry', dataController.getCovidDataByCountry);
  *             type: object
  *             properties:
  *               covid19:
- *                 type: object
- *                 properties:
- *                   country:
- *                     type: string
- *                   date:
- *                     type: string
- *                     format: date
- *                   population:
- *                     type: integer
- *                   cases:
- *                     type: integer
- *                   active:
- *                     type: integer
- *                   recovered:
- *                     type: integer
- *                   deaths:
- *                     type: integer
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - country
+ *                     - date
+ *                     - population
+ *                     - cases
+ *                     - active
+ *                     - recovered
+ *                     - deaths
+ *                   properties:
+ *                     country:
+ *                       type: string
+ *                     date:
+ *                       type: string
+ *                       format: date
+ *                     population:
+ *                       type: integer
+ *                     cases:
+ *                       type: integer
+ *                     active:
+ *                       type: integer
+ *                     recovered:
+ *                       type: integer
+ *                     deaths:
+ *                       type: integer
  *     responses:
  *       201:
  *         description: COVID data added successfully
@@ -163,16 +173,13 @@ router.put('/editCovidData', dataController.editCovidData);
  *   delete:
  *     summary: Delete COVID data entry
  *     tags: [Data]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: integer
- *                 description: ID of the record to delete
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the record to delete
  *     responses:
  *       200:
  *         description: COVID data deleted successfully
