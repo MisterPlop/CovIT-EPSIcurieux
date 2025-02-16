@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { DataController } from "../controller/dataController";
+import { authMiddleware } from "../../../middleware/auth";
 
 const router = Router();
 const dataController = new DataController();
@@ -52,7 +53,7 @@ const dataController = new DataController();
  *       500:
  *         description: Internal server error
  */
-router.get('/getCovidDataByCountry', dataController.getCovidDataByCountry);
+router.get('/getCovidDataByCountry', authMiddleware, dataController.getCovidDataByCountry);
 
 /**
  * @swagger
@@ -103,7 +104,7 @@ router.get('/getCovidDataByCountry', dataController.getCovidDataByCountry);
  *       500:
  *         description: Error adding data
  */
-router.post('/addCovidData', dataController.addCovidData);
+router.post('/addCovidData', authMiddleware, dataController.addCovidData);
 
 /**
  * @swagger
@@ -165,7 +166,7 @@ router.post('/addCovidData', dataController.addCovidData);
  *       500:
  *         description: Internal server error
  */
-router.put('/editCovidData', dataController.editCovidData);
+router.put('/editCovidData', authMiddleware, dataController.editCovidData);
 
 /**
  * @swagger
@@ -190,6 +191,6 @@ router.put('/editCovidData', dataController.editCovidData);
  *       500:
  *         description: Internal server error
  */
-router.delete('/deleteCovidData', dataController.deleteCovidData);
+router.delete('/deleteCovidData', authMiddleware, dataController.deleteCovidData);
 
 export default router;
