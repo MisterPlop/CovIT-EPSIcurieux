@@ -2,11 +2,13 @@ import { useState } from "react";
 
 import MyInfos from "./MyInfos";
 import AccountSecurity from "../Security/Index";
+import AdminPanel from "./AdminPanel";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInfo,
   faShield,
+  faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function UserAccount() {
@@ -18,6 +20,8 @@ export default function UserAccount() {
         return <MyInfos />;
       case "AccountSecurity":
         return <AccountSecurity />;
+      case "AdminPanel":
+        return <AdminPanel />;
       default:
         return <h3>Sélectionnez une section</h3>;
     }
@@ -33,6 +37,9 @@ export default function UserAccount() {
           </button>
           <button onClick={() => setSelectedTab("AccountSecurity")}>
           <FontAwesomeIcon icon={faShield}  size="xl" />
+          </button>
+          <button onClick={() => setSelectedTab("AdminPanel")} className="admin-icon">
+          <FontAwesomeIcon icon={faUserTie} size="xl"/>
           </button>
         </div>
         <article className="user_account">{renderComponent()}</article>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort, faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faSort, faSortUp, faSortDown, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const DataTable = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,7 +61,7 @@ const DataTable = ({ data }) => {
     const table = tableRef.current;
     if (table) {
       const { scrollLeft, scrollWidth, clientWidth } = table;
-  
+
       if (scrollLeft === 0) {
         table.classList.add("scroll-left");
         table.classList.remove("scroll-right");
@@ -84,37 +84,46 @@ const DataTable = ({ data }) => {
     }
   }, []);
 
+  const handleClearFilter = () => {
+    setFilterCountry("");
+  };
+
   return (
     <>
-      <input
-        type="text"
-        placeholder="Filter by country"
-        value={filterCountry}
-        onChange={(e) => setFilterCountry(e.target.value)}
-      />
+      <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Filtrer par pays"
+          value={filterCountry}
+          onChange={(e) => setFilterCountry(e.target.value)}
+        />
+        <button onClick={handleClearFilter} className={filterCountry ? "clear-filter-btn" : "hidden"} >
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+      </div>
       <table ref={tableRef}>
         <thead>
           <tr>
             <th onClick={() => handleSort("Country")}>
-              <p>Country <FontAwesomeIcon icon={getSortIcon("Country")} className="table-icon"/></p>
+              <p>Country <FontAwesomeIcon icon={getSortIcon("Country")} className="table-icon" /></p>
             </th>
             <th onClick={() => handleSort("Date")}>
-              <p>Date <FontAwesomeIcon icon={getSortIcon("Date")} className="table-icon"/></p>
+              <p>Date <FontAwesomeIcon icon={getSortIcon("Date")} className="table-icon" /></p>
             </th>
             <th onClick={() => handleSort("Population")}>
-              <p>Population <FontAwesomeIcon icon={getSortIcon("Population")} className="table-icon"/></p>
+              <p>Population <FontAwesomeIcon icon={getSortIcon("Population")} className="table-icon" /></p>
             </th>
             <th onClick={() => handleSort("Cases")}>
-              <p>Cases <FontAwesomeIcon icon={getSortIcon("Cases")} className="table-icon"/></p>
+              <p>Cases <FontAwesomeIcon icon={getSortIcon("Cases")} className="table-icon" /></p>
             </th>
             <th onClick={() => handleSort("Active")}>
-              <p>Active <FontAwesomeIcon icon={getSortIcon("Active")} className="table-icon"/></p>
+              <p>Active <FontAwesomeIcon icon={getSortIcon("Active")} className="table-icon" /></p>
             </th>
             <th onClick={() => handleSort("Recovered")}>
-              <p>Recovered <FontAwesomeIcon icon={getSortIcon("Recovered")} className="table-icon"/></p>
+              <p>Recovered <FontAwesomeIcon icon={getSortIcon("Recovered")} className="table-icon" /></p>
             </th>
             <th onClick={() => handleSort("Deaths")}>
-              <p>Deaths <FontAwesomeIcon icon={getSortIcon("Deaths")} className="table-icon"/></p>
+              <p>Deaths <FontAwesomeIcon icon={getSortIcon("Deaths")} className="table-icon" /></p>
             </th>
           </tr>
         </thead>
@@ -143,7 +152,7 @@ const DataTable = ({ data }) => {
           Next
         </button>
       </div>
-      </>
+    </>
   );
 };
 

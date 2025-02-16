@@ -357,6 +357,7 @@ footer>* {
 
 .chart-select-div select,
 .allDatas-article input,
+.allUsers-article input,
 .informations-update input,
 .login-form input,
 .add-datas-form input {
@@ -377,6 +378,7 @@ footer>* {
 }
 
 .allDatas-article input::placeholder,
+.allUsers-article input::placeholder,
 .informations-update input::placeholder,
 .login-form input::placeholder,
 .add-datas-form input::placeholder {
@@ -387,6 +389,7 @@ footer>* {
 
 .chart-select-div select:focus,
 .allDatas-article input:focus,
+.allUsers-article input:focus,
 .informations-update input:focus,
 .login-form input:focus,
 .add-datas-form input:focus {
@@ -452,7 +455,7 @@ footer>* {
 
 /* DATA TABLES */
 
-.allDatas-article {
+.allDatas-article, .allUsers-article {
     width: 100%;
     margin: auto;
 }
@@ -464,7 +467,6 @@ table {
     display: block;
     overflow-x: auto;
     overflow-y: scroll;
-    border-bottom: 4px solid var(--backgroundDark);
     transition: border-radius 0.3s;
 }
 
@@ -494,7 +496,9 @@ th {
 }
 
 th p {
-    width: 120px;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0 15px;
 }
 
 th .table-icon {
@@ -506,6 +510,7 @@ td {
     padding: 10px 15px;
     border-bottom: 1px solid var(--primaryB);
     text-align: center;
+    white-space: nowrap;
 }
 
 th:hover {
@@ -751,6 +756,23 @@ tbody tr:nth-child(even) {
     background: radial-gradient(circle, rgb(255, 129, 129), Var(--Red));
     box-shadow: 0px 0px 3px rgb(255, 129, 129);
     border: none;
+}
+
+/* ADMIN SECTION */
+
+.user_account .admin-row,
+.user_account-nav .admin-icon {
+    background: var(--gold);
+    color: var(--text);
+}
+
+.clear-filter-btn {
+    background: var(--primary);
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    margin: 5px;
 }
 
 
