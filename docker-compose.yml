@@ -15,25 +15,6 @@ services:
       - app_network
     # restart: unless-stopped
 
-  backend:
-    image: node:23-alpine
-    container_name: backend
-    working_dir: /app
-    volumes:
-      - ./backend:/app
-      - ./shared:/shared
-    command: sh -c "npm install && npm start"
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/covit
-      NODE_ENV: development
-    networks:
-      - app_network
-    # restart: unless-stopped
-
   frontend:
     image: node:23-alpine
     container_name: frontend
@@ -44,8 +25,6 @@ services:
     command: sh -c "npm install && npm start"
     ports:
       - "80:3000"
-    depends_on:
-      - backend
     networks:
       - app_network
     # restart: unless-stopped
