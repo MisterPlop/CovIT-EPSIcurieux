@@ -5,6 +5,9 @@ import { faPerson, faRankingStar, faHeadSideCough, faHandHoldingHeart, faSkull }
 import Loader from "../../Loader";
 import countries from "../../../Assets/Variables/countries"; // import the list of countries
 
+// Get the hostname of the current window, to avoid using a hard-coded IP address
+const host = window.location.hostname;
+
 /**
  * Generate an array of dates from start to end
  * @param {string} start - Start date in the format "YYYY-MM-DD"
@@ -164,7 +167,7 @@ export default function Stats() {
             <div className="chart-container">
               {selectedCountry && selectedMetric !== "Population" ? (
                 <iframe
-                  src={`http://192.168.1.26:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=${dateToTimestamp(
+                  src={`http://${host}:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=${dateToTimestamp(
                     startDate
                   )}&to=${dateToTimestamp(
                     endDate
@@ -179,7 +182,7 @@ export default function Stats() {
           <div className="stats-part part2">
             {/* TOP 3 Dynamic  URL grafana */}
             <h3>Top 3 des {titleTrad}</h3>
-            <iframe src={`http://192.168.1.26:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=1577867308000&to=1651409420000&timezone=browser&var-country=$__all&var-column=cases&editIndex=0&theme=light&panelId=${top3PanelIdGrafana}&__feature.dashboardSceneSolo`}
+            <iframe src={`http://${host}:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=1577867308000&to=1651409420000&timezone=browser&var-country=$__all&var-column=cases&editIndex=0&theme=light&panelId=${top3PanelIdGrafana}&__feature.dashboardSceneSolo`}
               width="100%"
               height="350"
               frameborder="0"
