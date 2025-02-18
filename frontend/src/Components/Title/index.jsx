@@ -6,11 +6,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
-import { getItemWithExpiration } from "../../Assets/Variables/functions";
-
 import ProfilPic from "../../Assets/Images/profilePicUser2.png";
 
-export default function Title({ title }) {
+export default function Title({ title, auth }) {
   const [loginMenuOpen, setLoginMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -26,14 +24,12 @@ export default function Title({ title }) {
     }
   };
 
-  const FAKETOKEN = getItemWithExpiration("fakeauth");
-
   return (
     <section className={!title ? "hidden" : "section-title"}>
       <h4>{title}</h4>
 
       <div className="login-menu">
-        {!FAKETOKEN ? (
+        {!auth ? (
           <>
             <Link to="/equipe/connexion">
               <FontAwesomeIcon icon={faCircleUser} size="lg"/>

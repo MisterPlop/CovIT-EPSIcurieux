@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort, faSortUp, faSortDown, faUserTie, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSort, faSortUp, faSortDown, faUserTie, faTimes, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { users } from "../../../../../Assets/Variables/users";
 
 const UsersTable = () => {
@@ -95,7 +97,7 @@ const UsersTable = () => {
     return (
         <>
             <article className="allUsers-article">
-                <h3>Liste des Utilisateurs</h3>
+                <h3>Liste des utilisateurs</h3>
                 <div className="filter-container">
                     <input
                         type="text"
@@ -107,6 +109,7 @@ const UsersTable = () => {
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </div>
+                <Link to="/equipe/creer-un-compte" className="create-account-link"><FontAwesomeIcon icon={faPlus} style={{ marginRight: '10px' }}/>Ajouter un utilisateur</Link>
                 <table ref={tableRef}>
                     <thead>
                         <tr>

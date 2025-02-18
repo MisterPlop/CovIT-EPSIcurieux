@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-
-import { getItemWithExpiration } from "../../Assets/Variables/functions";
+import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,7 +23,7 @@ function Header() {
     localStorage.setItem("isMenuOpen", !isHeaderOpen);
   };
 
-  const FAKETOKEN = getItemWithExpiration("fakeauth");
+  const { info } = useSelector((state) => state.user);
 
   return (
     <>
@@ -73,7 +72,7 @@ function Header() {
             </div>
           </NavLink>
 
-          {FAKETOKEN && (
+          {info.username !== "Invite" && (
             <>
               <NavLink to="/equipe/gestion_des_donnees">
                 <div className="nav-tab">
