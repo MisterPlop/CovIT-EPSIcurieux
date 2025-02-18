@@ -1,35 +1,77 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-// import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
+import { getItemWithExpiration, setItemWithExpiration } from "../../../../Assets/Variables/functions";
+import { API_BASE_URL } from "../../../../Assets/Variables/const";
+
+import { signin } from "../../../../store/slices/user";
 
 export default function UpdateProfile({ user }) {
-  const [firstname, setFirstname] = useState(user.firstname);
-  const [lastname, setLastname] = useState(user.lastname);
-  const [position, setPosition] = useState(user.position);
-  const [email, setEmail] = useState(user.email);
-  // const [msg, setMsg] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const profil = user.profil;
+  const [username, setUsername] = useState(user.username);
+  const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
   const [msg2, setMsg2] = useState("");
 
+  const TOKEN = getItemWithExpiration("auth");
+
+  /**
+   * Update user informations
+   * @returns {Promise<void>}
+   * @param {string} username
+   * @param {string} password
+   * @param {string} profil
+   * @param {number} id
+   * 
+   */
   async function handleSubmit(e) {
     e.preventDefault();
-
-    // const TOKEN = getItemWithExpiration("auth");
-
     try {
-    /* const res = await fetch(FETCH_URL + "users/update/" + user.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authentication: `Bearer ${TOKEN}`,
-      },
-      body: JSON.stringify({ pseudo, firstname, bio, email, id: user.id }),
-    });
-    const json = await res.json(); */
-    setMsg2("Mise à jour non fonctionnelle pour le moment");
-    // setMsg("Mise à jour réussie");
+
+      if (user.id && username && password && profil) {
+
+        const res = await fetch(`${API_BASE_URL}users/updateUserById?id=${encodeURIComponent(user.id)}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${TOKEN}`,
+          },
+          body: JSON.stringify({ username, password, profil }),
+        });
+        const json = await res.json();
+        console.log('json', json);
+        console.log('res', res);
+
+        if (res.status === 200) {
+          setMsg(json.message);
+
+          // If the user is updating his own profile, we need to update the token and the username in the store
+          const loginRes = await fetch(API_BASE_URL + "users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          });
+          const loginJson = await loginRes.json();
+
+          if (loginRes.status === 200) {
+            setMsg(loginRes.message);
+            setItemWithExpiration("auth", loginJson.token, 10080);
+            dispatch(signin({ username: username }));
+            navigate("/equipe/compte_utilisateur");
+          }
+        }
+      } else {
+        setMsg2("Veuillez remplir tous les champs");
+      }
+
     } catch (error) {
-      console.error(error);
-      setMsg2("Mise à jour échouée");
+      console.error("Erreur lors de la modification de vos informations: ", error);
+      setMsg2("Une erreur est survenue, rechargez la page et réessayez");
     }
   }
 
@@ -39,47 +81,39 @@ export default function UpdateProfile({ user }) {
 
       <div className="informations-update">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="firstname">Prénom</label>
+          <label htmlFor="profil">Type de profil</label>
           <input
+            disabled
+            required
+            placeholder="Type de profil"
             type="text"
-            name="firstname"
-            placeholder="firstname"
-            value={firstname}
-            onChange={(e) => {
-              setFirstname(e.target.value);
-            }}
+            name="profil"
+            value={user.profil === "admin" ? "Administrateur" : "Utilisateur"}
+            title="Vous ne pouvez pas modifier votre type de profil"
           />
-          <label htmlFor="lastname">Nom</label>
+          <label htmlFor="username">Nom d'utilisateur</label>
           <input
+            required
+            placeholder="Nom d'utilisateur"
             type="text"
-            name="lastname"
-            placeholder="lastname"
-            value={lastname}
+            name="username"
+            value={username}
             onChange={(e) => {
-              setLastname(e.target.value);
+              setUsername(e.target.value);
             }}
           />
-          <label htmlFor="position">Poste</label>
+          <label htmlFor="password">Mot de passe</label>
           <input
-            type="text"
-            name="position"
-            placeholder="position"
-            value={position}
+            required
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
             onChange={(e) => {
-              setPosition(e.target.value);
+              setPassword(e.target.value);
             }}
           />
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          {/* {msg && <p className="green non-absolute">{msg}</p>} */}
+          {msg && <p className="green non-absolute">{msg}</p>}
           {msg2 && <p className="red non-absolute">{msg2}</p>}
 
           <button type="submit">Modifier</button>

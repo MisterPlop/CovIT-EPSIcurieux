@@ -10,6 +10,13 @@ function SignOut() {
 
   const { info } = useSelector((state) => state.user);
 
+  /**
+   * Sign out
+   * @returns {Promise<void>}
+   * @param {string} username
+   * Username is removed from the store
+   * User is redirected to the home page
+   */
   dispatch(signout(info.username));
 
   function navigateToHome() {

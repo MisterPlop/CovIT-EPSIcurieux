@@ -367,6 +367,7 @@ footer>* {
 .informations-update input,
 .login-form input,
 .login-form select,
+.informations-update select,
 .add-datas-form input {
     width: 100%;
     height: 35px;
@@ -389,6 +390,7 @@ footer>* {
 .informations-update input::placeholder,
 .login-form input::placeholder,
 .login-form select::placeholder,
+.informations-update select::placeholder,
 .add-datas-form input::placeholder {
     color: var(--backgroundDark);
     font-family: "Manrope Variable";
@@ -401,6 +403,7 @@ footer>* {
 .informations-update input:focus,
 .login-form input:focus,
 .login-form select:focus,
+.informations-update select:focus,
 .add-datas-form input:focus {
     outline: 1px solid var(--gold2);
     background: var(--backgroundLight);
@@ -506,6 +509,7 @@ thead {
     color: var(--white);
 }
 
+.delete-btn,
 th {
     cursor: pointer;
 }
@@ -698,16 +702,25 @@ tbody tr:nth-child(even) {
     position: relative;
     width: 340px;
     height: 220px;
-    background: var(--goldGradientBkg);
-    color: var(--text);
+    background: var(--text);
+    color: var(--white);
     border-radius: 15px;
     box-shadow: var(--chartShadow);
     margin-bottom: 25px;
+    overflow: hidden;
 }
 
+.informations-logo,
 .informations p,
 .informations-btn {
     position: absolute;
+}
+
+.informations-logo {
+    width: 250px;
+    right: -20px;
+    bottom: -60px;
+    opacity: 0.5;
 }
 
 .informations-CovIT {

@@ -8,9 +8,13 @@ import { Link } from "react-router-dom";
 
 import ProfilPic from "../../Assets/Images/profilePicUser2.png";
 
-export default function Title({ title, auth }) {
+import { getItemWithExpiration } from "../../Assets/Variables/functions";
+
+export default function Title({ title }) {
   const [loginMenuOpen, setLoginMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
+
+  const TOKEN = getItemWithExpiration('auth');
 
   const toggleLoginMenu = () => {
     if (loginMenuOpen) {
@@ -29,7 +33,7 @@ export default function Title({ title, auth }) {
       <h4>{title}</h4>
 
       <div className="login-menu">
-        {!auth ? (
+        {!TOKEN ? (
           <>
             <Link to="/equipe/connexion">
               <FontAwesomeIcon icon={faCircleUser} size="lg"/>

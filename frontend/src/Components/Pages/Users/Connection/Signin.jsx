@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
-import { setItemWithExpiration } from "../../../../Assets/Variables/functions";
+import { getItemWithExpiration, setItemWithExpiration } from "../../../../Assets/Variables/functions";
 import { API_BASE_URL } from "../../../../Assets/Variables/const";
 import { signin } from "../../../../store/slices/user";
 
@@ -11,15 +10,14 @@ export default function Signin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { info } = useSelector((state) => state.user);
-
-    console.log('info', info);
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
     const [msg2, setMsg2] = useState("");
 
+    /**
+     * Check if the user is already connected
+     */
     const token = getItemWithExpiration("auth");
     useEffect(() => {
         if (!token) {
@@ -29,6 +27,15 @@ export default function Signin() {
         }
     }, []);
 
+    /**
+     * Sign in
+     * @returns {Promise<void>}
+     * @param {string} username
+     * @param {string} password
+     * Token is stored in the local storage
+     * Username is stored in the store
+     * If the user is connected, he is redirected to the manage datas page
+     */
     async function handleSubmit(e) {
         e.preventDefault();
         const res = await fetch(API_BASE_URL + "users/login", { 

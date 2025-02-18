@@ -19,6 +19,14 @@ export default function CreateAccount() {
     const [msg, setMsg] = useState(null);
     const [msg2, setMsg2] = useState(null);
 
+    /**
+     * Create a new user account
+     * @returns {Promise<void>}
+     * @param {string} username
+     * @param {string} password
+     * @param {string} profil
+     * 
+     */
     async function handleSubmit(e) {
         e.preventDefault();
 

@@ -40,7 +40,7 @@ function HOC({ child, title, auth }) {
         <Header />
 
         <main className="navigation_main">
-          {(!auth || (auth && tokenIsValid)) && <Title title={title} />}
+          <Title title={title} />
           {(!auth || (auth && tokenIsValid)) && <Child />}
         </main>
       </div>

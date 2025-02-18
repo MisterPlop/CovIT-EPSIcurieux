@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 
-// import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
-import { users } from "../../../../Assets/Variables/users";
+import { getItemWithExpiration } from "../../../../Assets/Variables/functions";
+import { API_BASE_URL } from "../../../../Assets/Variables/const";
 
 import UpdateInfos from "./UpdateMyInfos";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import CovItLogo from '../../../../Assets/Images/CovITLogoSolo.png';
 
 function MyInfos() {
   const [user, setUser] = useState(null);
@@ -15,17 +16,25 @@ function MyInfos() {
     setEditIsActiv((preveditIsActiv) => !preveditIsActiv);
   };
 
+  const TOKEN = getItemWithExpiration("auth");
+
+  /**
+   * Fetch user informations
+   * @returns {Promise<void>}
+   */
   useEffect(() => {
     async function getUserInfos() {
       try {
-        if (users) {
-          const user = users.find((u) => u.id === 1);
-          setUser(user);
-        } else {
-          console.error(
-            "Erreur lors de la récupération des informations utilisateur:"
-          );
-        }
+        const response = await fetch(`${API_BASE_URL}users/profil`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${TOKEN}`,
+          },
+        });
+        const data = await response.json();
+        setUser(data.user);
+        console.log('data', data.user);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des informations utilisateur:",
@@ -33,46 +42,45 @@ function MyInfos() {
         );
       }
     }
-
     getUserInfos();
   }, []);
 
   return (
     <>
-        <h3>Vos informations</h3>
+      <h3>Vos informations</h3>
 
-        {!user ? (
-          <></>
-        ) : (
-          <>
-            <div className="informations">
-              <p className="informations-CovIT">CovIT</p>
-              <p className="informations-position">{user.position}</p>
-              <p className="informations-name">
-                {user.firstname} {user.lastname}
-              </p>
-              <p className="informations-email">{user.email}</p>
+      {!user ? (
+        <></>
+      ) : (
+        <>
+          <div className="informations">
+            <p className="informations-CovIT">CovIT</p>
+            <p className="informations-position">Analiste</p>
+            <p className="informations-name">
+              {user.username}
+            </p>
+            <img src={CovItLogo} alt="logo" className="informations-logo" />
 
-              <button
-                className="informations-btn"
-                type="button"
-                onClick={toggleEditIsActiv}
-              >
-                <FontAwesomeIcon
-                  icon={faPenToSquare}
-                  size="xl"
-                  className="icon"
-                />
-              </button>
-            </div>
-          </>
-        )}
+            <button
+              className="informations-btn"
+              type="button"
+              onClick={toggleEditIsActiv}
+            >
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                size="xl"
+                className="icon"
+              />
+            </button>
+          </div>
+        </>
+      )}
 
-        {!editIsActiv ? (
-          <></>
-        ) : (
-          <>{!user ? <></> : <UpdateInfos user={user} />}</>
-        )}
+      {!editIsActiv ? (
+        <></>
+      ) : (
+        <>{!user ? <></> : <UpdateInfos user={user} />}</>
+      )}
     </>
   );
 }
