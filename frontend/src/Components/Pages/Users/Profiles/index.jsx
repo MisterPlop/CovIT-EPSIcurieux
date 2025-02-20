@@ -16,14 +16,13 @@ export default function UserAccount() {
   const [user, setUser] = useState([]);
   const [selectedTab, setSelectedTab] = useState("AdminPanel");
 
-  const TOKEN = getItemWithExpiration("auth");
-
   /**
    * Fetch user informations
    * @returns {Promise<void>}
    */
   useEffect(() => {
     async function getUserInfos() {
+    const TOKEN = getItemWithExpiration("auth");
       try {
         const response = await fetch(`${API_BASE_URL}users/profil`, {
           method: "GET",

@@ -18,14 +18,14 @@ export default function Signin() {
     /**
      * Check if the user is already connected
      */
-    const token = getItemWithExpiration("auth");
     useEffect(() => {
+        const token = getItemWithExpiration("auth");
         if (!token) {
             return;
         } else {
             navigate("/statistiques");
         }
-    }, []);
+    }, [navigate]);
 
     /**
      * Sign in

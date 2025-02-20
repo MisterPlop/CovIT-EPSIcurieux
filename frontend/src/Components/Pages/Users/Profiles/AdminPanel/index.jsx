@@ -45,7 +45,7 @@ const UsersTable = () => {
             }
         }
         fetchUsers();
-    }, [users]);
+    }, [users, TOKEN]);
 
     /**
      * Filter and sort users
@@ -162,7 +162,7 @@ const UsersTable = () => {
                     "Authorization": `Bearer ${TOKEN}`,
                 },
             });
-            const json = await res.json();
+            await res.json();
         }
     };
 
