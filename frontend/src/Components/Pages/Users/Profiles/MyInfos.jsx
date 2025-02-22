@@ -33,7 +33,6 @@ function MyInfos() {
         });
         const data = await response.json();
         setUser(data.user);
-        console.log('data', data.user);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des informations utilisateur:",

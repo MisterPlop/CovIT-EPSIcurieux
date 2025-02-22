@@ -82,13 +82,29 @@ h4 {
     color: var(--text) !important;
     background: var(--goldGradientBkg) !important;
 }
+.position-relative {
+    position: relative;
+}
+.msg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: fit-content;
+    text-align: center;
+    color: var(--white);
+    padding: 25px 50px;
+    border-radius: 5px;
+    margin: 10px auto;
+    box-shadow: var(--chartShadow);
+}
 
 .red {
-    color: var(--Red) !important;
+    background: var(--Red) !important;
 }
 
 .green {
-    color: var(--Green) !important;
+    background: var(--Green) !important;
 }
 
 a {
@@ -105,6 +121,7 @@ button:hover {
 .mobilAndTablet-hidden {
     display: none;
 }
+
 
 /* HOME */
 
@@ -409,6 +426,17 @@ footer>* {
     background: var(--backgroundLight);
 }
 
+.edit-input {
+    margin: 0;
+    padding: 0;
+}
+.edit-input input {
+    width: 90% !important;
+    margin: 0;
+    text-align: center;
+    background: var(--primaryB);
+}
+
 .create-account-link,
 .informations-update button,
 .login-form button {
@@ -522,6 +550,11 @@ th p {
 
 th .table-icon {
     margin-left: 5px;
+    cursor: pointer;
+}
+td .table-icon {
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 th,

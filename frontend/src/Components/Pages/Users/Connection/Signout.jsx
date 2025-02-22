@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { signout } from '../../../../store/slices/user'
+import { useEffect } from 'react';
 
 function SignOut() {
 
@@ -19,11 +20,13 @@ function SignOut() {
    */
   dispatch(signout(info.username));
 
-  function navigateToHome() {
-    localStorage.removeItem("auth");
-    navigate("/")
-  };
-  navigateToHome();
+  useEffect(() => {
+    function navigateToHome() {
+      localStorage.removeItem("auth");
+      navigate("/")
+    };
+    navigateToHome();
+  }, []);
 
   return <h2>Retour à l'accueil</h2>
 };

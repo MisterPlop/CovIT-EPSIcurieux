@@ -162,7 +162,6 @@ const UsersTable = () => {
                     "Authorization": `Bearer ${TOKEN}`,
                 },
             });
-            await res.json();
         }
     };
 

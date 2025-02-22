@@ -202,7 +202,7 @@ export default function Stats() {
                   )}&timezone=browser&var-country=${selectedCountry}&var-column=${selectedMetric}&theme=light&panelId=3&__feature.dashboardSceneSolo`}
                   width="100%"
                   height="350"
-                  frameborder="0"
+                  frameBorder="0"
                   title="All Statistics"
                 ></iframe>
               ) : (
@@ -217,7 +217,7 @@ export default function Stats() {
               src={`http://${host}:3001/d-solo/bea6dakrzrx8gd/covit?orgId=1&from=1577867308000&to=1651409420000&timezone=browser&var-country=$__all&var-column=cases&editIndex=0&theme=light&panelId=${top3PanelIdGrafana}&__feature.dashboardSceneSolo`}
               width="100%"
               height="350"
-              frameborder="0"
+              frameBorder="0"
               title="Top 3"
             ></iframe>
           </div>

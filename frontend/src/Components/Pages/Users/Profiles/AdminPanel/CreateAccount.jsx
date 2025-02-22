@@ -32,6 +32,9 @@ export default function CreateAccount() {
 
         if (!username || !password || !profil) {
             setMsg2("Veuillez remplir tous les champs");
+            setTimeout(() => {
+                setMsg2("");
+            }, 3000);
             return;
         }
 
@@ -47,9 +50,15 @@ export default function CreateAccount() {
 
         if (res.status === 201) {
             setMsg(json.message);
+            setTimeout(() => {
+                setMsg("");
+            }, 3000);
             navigate("/equipe/compte_utilisateur");
         } else {
             setMsg2(json.message);
+            setTimeout(() => {
+                setMsg2("");
+            }, 3000);
         }
     }
 
@@ -57,12 +66,13 @@ export default function CreateAccount() {
         <>
             <section className="section-body log-section">
 
-                <Link to="/equipe/compte_utilisateur" className="back-link"><FontAwesomeIcon icon={faChevronLeft} style={{ marginRight: '10px' }} size="xs"/>Retour</Link>
+                <Link to="/equipe/compte_utilisateur" className="back-link"><FontAwesomeIcon icon={faChevronLeft} style={{ marginRight: '10px' }} size="xs" />Retour</Link>
 
-                {msg && <p className="msg green">{msg}</p>}
-                {msg2 && <p className="msg red">{msg2}</p>}
 
-                <form onSubmit={handleSubmit} className="login-form">
+
+                <form onSubmit={handleSubmit} className="login-form position-relative">
+                    {msg && <p className="msg green">{msg}</p>}
+                    {msg2 && <p className="msg red">{msg2}</p>}
                     <label htmlFor="username">Nom d'utilisateur</label>
                     <input
                         placeholder="Nom d'utilisateur"

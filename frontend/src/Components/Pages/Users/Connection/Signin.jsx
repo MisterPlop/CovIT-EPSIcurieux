@@ -38,20 +38,29 @@ export default function Signin() {
      */
     async function handleSubmit(e) {
         e.preventDefault();
-        const res = await fetch(API_BASE_URL + "users/login", { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
-        });
-        const json = await res.json();
-
-        if (res.status === 200) {
-            setMsg(res.message);
-            setItemWithExpiration("auth", json.token, 10080);
-            dispatch(signin({ username: username }));
-            navigate("/equipe/gestion_des_donnees");
-        } else {
-            setMsg2(res.message);
+        try {
+            const res = await fetch(API_BASE_URL + "users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
+            const json = await res.json();
+            if (res.status === 200) {
+                setMsg("Connexion réussie, Vous allez être redirigé.");
+                setItemWithExpiration("auth", json.token, 10080);
+                dispatch(signin({ username: username }));
+                navigate("/equipe/gestion_des_donnees");
+            } else {
+                setMsg2("Nom d'utilisateur ou mot de passe incorrect.");
+                setTimeout(() => {
+                    setMsg2("");
+                  }, 3000);
+            }
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de la connexion : ", error);
+        } finally {
+            setUsername("");
+            setPassword("");
         }
     };
 
@@ -59,10 +68,9 @@ export default function Signin() {
         <>
             <section className="section-body log-section">
 
-                {msg && <p className="msg green">{msg}</p>}
-                {msg2 && <p className="msg red">{msg2}</p>}
-
-                <form onSubmit={handleSubmit} className="login-form">
+                <form onSubmit={handleSubmit} className="login-form position-relative">
+                    {msg && <p className="msg green">{msg}</p>}
+                    {msg2 && <p className="msg red">{msg2}</p>}
                     <label htmlFor="username">Nom d'utilisateur</label>
                     <input
                         required

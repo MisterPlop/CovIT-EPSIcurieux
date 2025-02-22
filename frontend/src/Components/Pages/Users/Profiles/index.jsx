@@ -14,7 +14,7 @@ import {
 
 export default function UserAccount() {
   const [user, setUser] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("AdminPanel");
+  const [selectedTab, setSelectedTab] = useState("MyInfos");
 
   /**
    * Fetch user informations
@@ -33,7 +33,6 @@ export default function UserAccount() {
         });
         const data = await response.json();
         setUser(data.user);
-        console.log('data', data.user);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des informations utilisateur:",

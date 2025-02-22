@@ -33,6 +33,9 @@ export default function UpdateProfile({ user }) {
     e.preventDefault();
     try {
 
+      if ( username === "" || password === "" || profil === "") {
+        setMsg2("Veuillez remplir tous les champs");
+      }
       if (user.id && username && password && profil) {
 
         const res = await fetch(`${API_BASE_URL}users/updateUserById?id=${encodeURIComponent(user.id)}`, {
@@ -47,7 +50,7 @@ export default function UpdateProfile({ user }) {
         console.log('json', json);
         console.log('res', res);
 
-        if (res.status === 200) {
+        if (res.status === 201) {
           setMsg(json.message);
 
           // If the user is updating his own profile, we need to update the token and the username in the store
@@ -80,11 +83,10 @@ export default function UpdateProfile({ user }) {
       <h3>Modifier vos informations</h3>
 
       <div className="informations-update">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="position-relative">
           <label htmlFor="profil">Type de profil</label>
           <input
             disabled
-            required
             placeholder="Type de profil"
             type="text"
             name="profil"
@@ -93,7 +95,6 @@ export default function UpdateProfile({ user }) {
           />
           <label htmlFor="username">Nom d'utilisateur</label>
           <input
-            required
             placeholder="Nom d'utilisateur"
             type="text"
             name="username"
@@ -104,7 +105,6 @@ export default function UpdateProfile({ user }) {
           />
           <label htmlFor="password">Mot de passe</label>
           <input
-            required
             type="password"
             name="password"
             placeholder="password"
@@ -113,8 +113,8 @@ export default function UpdateProfile({ user }) {
               setPassword(e.target.value);
             }}
           />
-          {msg && <p className="green non-absolute">{msg}</p>}
-          {msg2 && <p className="red non-absolute">{msg2}</p>}
+          {msg && <p className="msg green non-absolute">{msg}</p>}
+          {msg2 && <p className="msg red non-absolute">{msg2}</p>}
 
           <button type="submit">Modifier</button>
         </form>
