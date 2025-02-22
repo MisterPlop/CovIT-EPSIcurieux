@@ -58,6 +58,31 @@ const dataController = new DataController();
 
 /**
  * @swagger
+ * /covid19/allDatas:
+ *   get:
+ *     summary: Obtenir toutes les données COVID
+ *     security:
+ *       - BearerAuth: []
+ *     tags: [Data]
+ *     responses:
+ *       200:
+ *         description: Toutes les données COVID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CovidData'
+ *       401:
+ *         description: Non autorisé - Token JWT manquant ou invalide
+ *       404:
+ *         description: Aucune données trouvée
+ *       500:
+ *         description: Erreur serveur interne
+ */
+
+router.get('/allDatas', authMiddleware, dataController.getCovidDatas);
+
+/**
+ * @swagger
  * /covid19/getCovidDataByCountry:
  *   get:
  *     summary: Obtenir les données COVID pour un pays spécifique
@@ -146,7 +171,7 @@ router.post('/addCovidData', authMiddleware, dataController.addCovidData);
  *                     required:
  *                       - id
  *     responses:
- *       200:
+ *       201:
  *         description: Données COVID mises à jour avec succès
  *       401:
  *         description: Non autorisé - Token JWT manquant ou invalide
@@ -175,7 +200,7 @@ router.put('/editCovidData', authMiddleware, dataController.editCovidData);
  *         required: true
  *         description: ID de l'enregistrement à supprimer
  *     responses:
- *       200:
+ *       201:
  *         description: Données COVID supprimées avec succès
  *       401:
  *         description: Non autorisé - Token JWT manquant ou invalide

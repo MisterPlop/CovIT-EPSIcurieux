@@ -9,6 +9,12 @@ export class DataRepository {
         this.client = PostgreMiddleware.getInstance().getClient();
     }
 
+    async getCovidDatas(): Promise<CovidData[]> {
+        const query = 'SELECT * FROM covid19';
+        const result = await this.client.query(query);
+        return result.rows;
+    }
+    
     async getCovidDataByCountry(country: string) {
         const query = `
             SELECT * FROM covid19

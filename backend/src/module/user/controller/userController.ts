@@ -109,7 +109,7 @@ export class UserController {
         const id = req.query.id as string;
         try{
             await userManager.deleteUser(id);
-            res.status(200).json({ message: "Utilisateur supprimé avec succès" });
+            res.status(201).json({ message: "Utilisateur supprimé avec succès" });
         } catch (error) {
             if (error instanceof Error) {
                 res.status(401).json({ message: error.message });
@@ -132,7 +132,7 @@ export class UserController {
         const userData: UserLogin = req.body;
         try{
             const result = await userManager.updateUserById(id, userData);
-            res.status(200).json({ message: "Utilisateur modifié avec succès" , result});
+            res.status(201).json({ message: "Utilisateur modifié avec succès" , result});
         } catch (error) {
             if (error instanceof Error) {
                 res.status(401).json({ message: error.message });

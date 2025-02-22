@@ -163,7 +163,7 @@ router.get('/getUserById', authMiddleware, userController.getUserById);
  *           schema:
  *             $ref: '#/components/schemas/UserLogin'
  *     responses:
- *       200:
+ *       201:
  *         description: Utilisateur modifié avec succès
  *         content:
  *           application/json:
@@ -278,7 +278,7 @@ router.post('/login', userController.login);
  *           type: string
  *         description: ID de l'utilisateur à supprimer
  *     responses:
- *       200:
+ *       201:
  *         description: Utilisateur supprimé avec succès
  *         content:
  *           application/json:

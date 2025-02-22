@@ -10,6 +10,20 @@ export class DataController {
     constructor() {
     }
 
+    async getCovidDatas(req: AuthRequest, res: Response) {
+        if (!req.user || req.user.profil !== "admin"){
+            res.status(401).json({ message: "Utilisateur non autorisé" });
+            return;
+        }
+        try {
+            const data = await dataManager.getCovidDatas();
+            res.status(200).json(data);
+        } catch (err) {
+            console.error('Error getting data:', err);
+            res.status(500).send(HttpMessages.ERROR_GETTING_DATA);
+        }
+    }
+
     async getCovidDataByCountry(req: AuthRequest, res: Response) {
         if (!req.user || req.user.profil !== "admin"){
             res.status(401).json({ message: "Utilisateur non autorisé" });
