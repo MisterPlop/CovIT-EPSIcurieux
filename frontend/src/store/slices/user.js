@@ -14,11 +14,12 @@ export const userSlice = createSlice({
         signin: (state, action) => {
             state.info = {isLogged: true, username: action.payload.username };
         },
-        signout: (state, action) => {
+        signout: (state) => {
             state.info = {
                 isLogged: false,
                 username: "Invite",
             };
+            localStorage.removeItem("auth"); // Nettoyage côté client
         }
     }
 });

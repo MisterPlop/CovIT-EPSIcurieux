@@ -18,15 +18,11 @@ function SignOut() {
    * Username is removed from the store
    * User is redirected to the home page
    */
-  dispatch(signout(info.username));
-
+  
   useEffect(() => {
-    function navigateToHome() {
-      localStorage.removeItem("auth");
+      dispatch(signout());
       navigate("/")
-    };
-    navigateToHome();
-  }, []);
+  }, [navigate, dispatch, info.username]);
 
   return <h2>Retour à l'accueil</h2>
 };

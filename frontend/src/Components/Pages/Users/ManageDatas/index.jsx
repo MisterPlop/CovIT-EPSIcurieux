@@ -41,7 +41,7 @@ export default function ManageDatas() {
         }
     }
     fetchDatas();
-}, [allDatas]);
+}, [allDatas, TOKEN]);
 
   return (
     <>

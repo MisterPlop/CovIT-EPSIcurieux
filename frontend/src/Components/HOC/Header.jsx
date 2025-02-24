@@ -31,7 +31,7 @@ function Header() {
         className={
           pathname === "/"
             ? "hidden"
-            : { isHeaderOpen }
+            : isHeaderOpen
             ? "navigation_header menuOpen"
             : "navigation_header menuClose"
         }

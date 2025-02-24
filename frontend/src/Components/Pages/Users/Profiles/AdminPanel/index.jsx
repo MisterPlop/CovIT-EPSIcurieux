@@ -155,7 +155,7 @@ const UsersTable = () => {
             `Êtes-vous sûr de vouloir supprimer le profil de ${username} ?`
         );
         if (confirmed) {
-            const res = await fetch(`${API_BASE_URL}users/deleteUser?id=${encodeURIComponent(userId)}`, {
+            await fetch(`${API_BASE_URL}users/deleteUser?id=${encodeURIComponent(userId)}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
