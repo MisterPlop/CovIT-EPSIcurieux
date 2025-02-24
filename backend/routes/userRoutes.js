@@ -1,10 +1,22 @@
 import express from "express";
-import { getUsers, createUser, testUser } from "../controllers/userControllers.js"; 
+import { 
+    getAllUsers, 
+    getUserById, 
+    createUser, 
+    updateUser, 
+    deleteUser 
+} from "../controllers/userControllers.js";
+import { verifyToken } from "../middlewares/authMiddleware.js"; // Protection par token
 
 const router = express.Router();
 
-router.get("/", getUsers); // GET /users
-router.post("/", createUser); // POST /users
-router.get("/test", testUser); // Test route
+// 🔹 Routes protégées par token
+router.get("/getAllUser", verifyToken, getAllUsers);
+router.get("/getUserById:id", verifyToken, getUserById);
+router.put("/updateUser:id", verifyToken, updateUser);
+router.delete("/deleteUser:id", verifyToken, deleteUser);
+
+// 🔹 Route de création de user (ouverte)
+router.post("/", createUser);
 
 export default router;

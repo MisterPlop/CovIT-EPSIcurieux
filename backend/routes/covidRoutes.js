@@ -5,7 +5,7 @@ import {
     createCovidEntry, 
     updateCovidEntry, 
     deleteCovidEntry 
-} from "../controllers/covidController.js"; // Vérifie bien le chemin !
+} from "../controllers/covidController.js";
 
 const router = express.Router();
 
@@ -17,3 +17,5 @@ router.put("/change-data:id", updateCovidEntry); // Modifier une entrée existan
 router.delete("/delete-data:id", deleteCovidEntry); // Supprimer une entrée
 
 export default router;
+
+

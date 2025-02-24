@@ -27,30 +27,12 @@ const covidSchema = Joi.object({
     recovered_per_100_cases: Joi.number().precision(2).optional(),
 });
 
-// Récupérer les données Covid avec filtres et pagination
+// Récupérer les données Covid
 export const getCovidData = async (req, res) => {
     try {
-        console.log("📌 Requête complète reçue :", req.query);
-        const { start_date, end_date, limit = 10, page = 1 } = req.query;
-
-        if (!start_date || !end_date) {
-            console.error("❌ Paramètres manquants :", { start_date, end_date });
-            return res.status(400).json({ error: "Les paramètres start_date et end_date sont requis." });
-        }
-
-        const offset = (parseInt(page) - 1) * parseInt(limit);
-
-        const data = await Covid19.findAll({
-            where: { date_reported: { [Op.between]: [start_date, end_date] } },
-            order: [["date_reported", "DESC"]],
-            limit: parseInt(limit),
-            offset: offset,
-        });
-
-        console.log("✅ Données récupérées :", data);
+        const data = await Covid19.findAll();
         res.json(data);
     } catch (error) {
-        console.error("❌ Erreur serveur :", error);
         res.status(500).json({ error: "Erreur serveur", details: error.message });
     }
 };
@@ -68,7 +50,7 @@ export const getCovidStats = async (req, res) => {
             ],
             raw: true,
         });
-        
+
         console.log("✅ Statistiques récupérées :", stats);
         res.json(stats);
     } catch (error) {
