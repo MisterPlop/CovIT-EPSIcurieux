@@ -1,18 +1,14 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import userReducer from "./slices/index";
+import indexReducer from "./slices/index";
 
 const persistConfig = {
     key: 'root',
     storage,
     blacklist: ["someNonPersistedReducer"], // Avoid persisting unnecessary reducers
 };
-
-const indexReducer = combineReducers({
-    user: userReducer,
-});
 
 const persistedReducer = persistReducer(persistConfig, indexReducer);
 
