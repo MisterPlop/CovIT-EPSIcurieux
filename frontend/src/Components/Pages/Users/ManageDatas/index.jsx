@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function ManageDatas() {
-  const [addDatasOpen, setAddDatasOpen] = useState(true);
+  const [addDatasOpen, setAddDatasOpen] = useState(false);
   const [allDatas, setAllDatas] = useState([]);
 
   const toggleAddDatas = () => {

@@ -161,6 +161,7 @@ button:hover {
     padding-bottom: 5px;
     transform: translateX(-50%);
     background: var(--backgroundDark);
+    z-index: 100;
 }
 
 .navigation_header img {
