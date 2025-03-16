@@ -120,7 +120,7 @@ export class UserController {
     }
 
     async updateUserById(req: AuthRequest, res: Response) {
-        if (!req.user || req.user.profil !== "admin"){
+        if (!req.user){
             res.status(401).json({ message: "Utilisateur non autorisé" });
             return;
         }
