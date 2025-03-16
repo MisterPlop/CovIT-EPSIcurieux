@@ -109,7 +109,7 @@ export default function AddDatas() {
             type="text"
             name="population"
             value={population}
-            onChange={(e) => setPopulation(e.target.value)}
+            onChange={(e) => setPopulation(e.target.value.replace(/[^0-9]/g, ""))}
           />
         </div>
         <div className="form-group">
@@ -119,7 +119,7 @@ export default function AddDatas() {
             type="text"
             name="cases"
             value={cases}
-            onChange={(e) => setCases(e.target.value)}
+            onChange={(e) => setCases(e.target.value.replace(/[^0-9]/g, ""))}
           />
         </div>
         <div className="form-group">
@@ -129,7 +129,7 @@ export default function AddDatas() {
             type="text"
             name="active"
             value={active}
-            onChange={(e) => setActive(e.target.value)}
+            onChange={(e) => setActive(e.target.value.replace(/[^0-9]/g, ""))}
           />
         </div>
         <div className="form-group">
@@ -139,7 +139,7 @@ export default function AddDatas() {
             type="text"
             name="recovered"
             value={recovered}
-            onChange={(e) => setRecovered(e.target.value)}
+            onChange={(e) => setRecovered(e.target.value.replace(/[^0-9]/g, ""))}
           />
         </div>
         <div className="form-group">
@@ -149,7 +149,7 @@ export default function AddDatas() {
             type="text"
             name="deaths"
             value={deaths}
-            onChange={(e) => setDeaths(e.target.value)}
+            onChange={(e) => setDeaths(e.target.value.replace(/[^0-9]/g, ""))}
           />
         </div>
         {loading ? <Loader /> : <button type="submit"><FontAwesomeIcon icon={faCirclePlus} size="xl" /><p>Ajouter</p></button>}

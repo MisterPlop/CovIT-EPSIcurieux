@@ -133,25 +133,25 @@ export default function Stats() {
 
         <div className="stats-container">
           <div className="stats-part part1">
-            {
-              <div className="chart-select-div">
-                <label htmlFor="country-select">Pays: </label>
-                <select
-                  id="country-select"
-                  value={selectedCountry}
-                  onChange={handleCountryChange}
-                >
-                  <option value="" disabled>
-                    Choisissez un pays
+            {/* ----------------------- COUNTRY ----------------------- */}
+            <div className="chart-select-div">
+              <label htmlFor="country-select">Pays: </label>
+              <select
+                id="country-select"
+                value={selectedCountry}
+                onChange={handleCountryChange}
+              >
+                <option value="" disabled>
+                  Choisissez un pays
+                </option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
                   </option>
-                  {countries.map((country, index) => (
-                    <option key={index} value={country.name}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            }
+                ))}
+              </select>
+            </div>
+            {/* ----------------------- COLUMN ----------------------- */}
             <div className="chart-btn-div">
               {cards.map((card, index) => (
                 <button
@@ -169,6 +169,7 @@ export default function Stats() {
                 </button>
               ))}
             </div>
+            {/* ----------------------- TIME INTERVAL ----------------------- */}
             <div className="chart-select-div">
               <label>Période :</label>
               <select
