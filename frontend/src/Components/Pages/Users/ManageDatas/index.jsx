@@ -59,7 +59,7 @@ export default function ManageDatas() {
         </article>
 
         <article className="allDatas-article">
-          <h3>Toutes les donnés</h3>
+          <h3>Toutes les données</h3>
           <DataTable datas={allDatas} />
         </article>
       </section>
